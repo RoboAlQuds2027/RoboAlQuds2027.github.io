@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Mahmoud Said Robotics Engineer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(-45deg, #ffffff, #f8f9fa, #e8f4f8, #fff5e6, #f0f8ff, #ffffff, #e3f2fd, #fce4ec, #f1f8e9);
+            background-size: 600% 600%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 25% { background-position: 100% 0%; } 50% { background-position: 100% 50%; } 75% { background-position: 0% 100%; } 100% { background-position: 0% 50%; } }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(26, 188, 156, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            animation: floatingParticles 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        @keyframes floatingParticles { 0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.8; } 33% { transform: translateY(-30px) rotate(120deg) scale(1.1); opacity: 0.6; } 66% { transform: translateY(30px) rotate(240deg) scale(0.9); opacity: 0.4; } }
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        nav ul { list-style: none; display: flex; justify-content: center; gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        nav a { text-decoration: none; color: #666; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.3s ease; }
+        nav a:hover, nav a.active { color: #007bff; background: rgba(0, 123, 255, 0.1); transform: translateY(-2px); }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 5rem 0 2rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(131, 20, 20, 0.1), rgba(56, 194, 32, 0.1)), url('assets/electronics.jpg') center/cover no-repeat; /* Add your hero background image here */
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            background-attachment: fixed; /* Parallax effect like index.html */
+        }
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll; /* Fix for mobile */
+            }
+            /* ...existing code... */
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(52, 152, 219, 0.1), transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(26, 188, 156, 0.1), transparent 50%);
+            animation: heroOverlay 8s ease-in-out infinite;
+        }
+        @keyframes heroOverlay { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.02); } }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: row-reverse; /* Image on right */
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+        .hero-profile-pic {
+            width: 220px;
+            height: 220px;
+            border-radius: 32px;
+            object-fit: cover;
+            border: 6px solid #00bcd4;
+            box-shadow: 0 12px 40px rgba(0,188,212,0.25), 0 2px 16px rgba(0,0,0,0.08);
+            background: #e3f2fd;
+            margin-bottom: 0;
+            margin-top: 0;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .hero-main-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+        }
+        .hero-title-bar h1 {
+            font-size: clamp(3rem, 7vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #ff0000 0%, #ff5100 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+            animation: titleFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+        }
+        .hero-title-bar h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.18);
+            animation: subtitleFloat 5s ease-in-out infinite;
+        }
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
+        }
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0px); opacity: 0.9; }
+            50% { transform: translateY(-8px); opacity: 1; }
+        }
+        .hero-title-bar p {
+            color: #ffffff;
+            font-size: 1.3rem;
+            margin-bottom: 0.7rem;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.18);
+        }
+        .hero-about {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1.7rem;
+            max-width: 600px;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.18);
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        .download-cv-btn {
+            background: linear-gradient(135deg, #007bff, #00bcd4);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,123,255,0.13);
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+        .download-cv-btn:hover {
+            background: linear-gradient(135deg, #00bcd4, #007bff);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .hero-contact-bar {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .hero-contact-link {
+            background: #fff;
+            color: #007bff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            border: 1.5px solid #00bcd4;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hero-contact-link:hover {
+            background: #00bcd4;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,188,212,0.13);
+        }
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        /* Stats Section */
+        .stats-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 4rem 0; }
+        .stat-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 20px; padding: 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; flex-direction: column; align-items: center; }
+        .stat-icon { font-size: 2.2rem; margin-bottom: 0.5rem; color: #00bcd4; }
+        .stat-number { font-size: 2.2rem; font-weight: 700; color: #007bff; margin-bottom: 0.2rem; }
+        .stat-label { color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; font-size: 1rem; }
+        /* Professional Section */
+        .professional-section { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 30px; padding: 3rem; margin-bottom: 4rem; box-shadow: 0 20px 60px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.4); position: relative; overflow: hidden; }
+        .professional-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #007bff, #00bcd4, #007bff); background-size: 200% 100%; animation: shimmer 2s ease-in-out infinite; }
+        @keyframes shimmer { 0%, 100% { background-position: 200% 0; } 50% { background-position: -200% 0; } }
+        .section-title { font-size: 2.5rem; color: #333; margin-bottom: 2rem; text-align: center; font-weight: 700; position: relative; }
+        .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00bcd4); border-radius: 2px; }
+        .experience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 3rem; margin-top: 3rem; }
+        .experience-card, .education-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.3); position: relative; transition: all 0.3s ease; }
+        .experience-card::before, .education-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent); transition: all 0.8s ease; }
+        .experience-card:hover::before, .education-card:hover::before { left: 100%; }
+        .timeline-item {
+            padding-left: 0;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+        .experience-card {
+            margin: 0 auto;
+            max-width: 1100px;
+            width: 100%;
+            background: linear-gradient(135deg, #f8f9fa 60%, #e0e0e0 100%);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.10);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1.5px solid #e0e0e0;
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s, border 0.3s;
+        }
+        @media (max-width: 1200px) {
+            .experience-card { max-width: 100%; width: 100%; }
+        }
+        .timeline {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        @media (max-width: 900px) {
+            .experience-card { max-width: 100%; width: 100%; }
+        }
+        /* Skills Section */
+        .skills-section { background: rgba(255,255,255,0.97); border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); padding: 2.5rem 3rem; margin: 2rem auto 3rem auto; max-width: 900px; position: relative; }
+        .skills-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+        .skills-tag { background: linear-gradient(135deg, #00bcd4 60%, #007bff 100%); color: #fff; padding: 0.5rem 1.2rem; border-radius: 18px; font-size: 1rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,123,255,0.08); border: none; }
+        /* Projects grid (SVG placeholder for missing images) */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .project-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.3); position: relative; }
+        .project-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent); transition: all 0.8s ease; }
+        .project-card:hover::before { left: 100%; }
+        .project-card:hover {
+            box-shadow: 0 24px 60px rgba(0,123,255,0.18), 0 2px 16px rgba(0,0,0,0.10);
+            border: 2px solid #00bcd4;
+            transform: translateY(-10px) scale(1.03);
+        }
+        .project-image { width: 100%; height: 250px; background: linear-gradient(135deg, #e3f2fd, #f0f8ff); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #007bff; position: relative; overflow: hidden; }
+        .project-image svg { width: 80px; height: 80px; }
+        .project-content { padding: 2rem; }
+        .project-title { font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 0.5rem; }
+        .project-category { color: #007bff; font-size: 0.9rem; font-weight: 500; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .project-description { color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .tech-tag { background: linear-gradient(135deg, #f8f9fa, #e9ecef); color: #495057; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 500; }
+        .project-links { display: flex; gap: 1rem; }
+        .project-link { padding: 0.8rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; flex: 1; text-align: center; }
+        .primary-link { background: linear-gradient(135deg, #007bff, #00bcd4); color: white; }
+        .primary-link:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3); }
+        .secondary-link { background: rgba(255, 255, 255, 0.8); color: #666; border: 1px solid rgba(0, 123, 255, 0.2); }
+        .secondary-link:hover { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+        /* Contact Section */
+        .contact-section { background: linear-gradient(135deg, #e3f2fd 60%, #f0f8ff 100%); border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); padding: 2.5rem 3rem; margin: 2rem auto 3rem auto; max-width: 900px; position: relative; text-align: center; }
+        .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .contact-link { background: #fff; color: #007bff; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: 500; border: 1.5px solid #00bcd4; text-decoration: none; transition: background 0.3s, color 0.3s, box-shadow 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .contact-link:hover { background: #00bcd4; color: #fff; box-shadow: 0 4px 16px rgba(0,188,212,0.13); }
+        @media (max-width: 768px) {
+            .main-content { padding: 2rem 1rem; }
+            .experience-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .project-card { margin: 0 0.5rem; }
+            .professional-section, .contact-section, .skills-section { padding: 2rem; margin: 2rem 0.5rem; }
+            .stats-section { grid-template-columns: repeat(2, 1fr); }
+            .timeline { padding-left: 1.5rem; }
+            .timeline-item { padding-left: 1.5rem; }
+            .timeline-item::before { left: -1.5rem; }
+        }
+        @media (max-width: 900px) {
+            .hero-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .hero-main-text {
+                align-items: center;
+                text-align: center;
+            }
+            .hero-text-box {
+                padding: 1rem 0.5rem 1rem 0.5rem;
+                max-width: 98vw;
+                align-items: center;
+            }
+        }
+        .hero-text-box {
+            background: none;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0;
+            max-width: none;
+            margin: 0;
+            backdrop-filter: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.38); /* Transparent black overlay for readability */
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Add popup modal styles */
+        .email-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+        }
+        .email-modal {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            max-width: 95vw;
+            min-width: 320px;
+            text-align: center;
+            position: relative;
+            z-index: 10000;
+            animation: modalPopIn 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes modalPopIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .email-modal h3 {
+            margin-bottom: 1rem;
+            color: #007bff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .email-modal p {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .email-modal .email-address {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f5571d;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 0.5rem 1.2rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        .email-modal .close-btn {
+            background: #00bcd4;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+        .email-modal .close-btn:hover {
+            background: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html" class="active">Portfolio</a></li>
+            <li><a href="tutorials/index.html">Tutorials</a></li>
+            <li><a href="blog/index.html">Blog</a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <img src="assets/profile_background.jpg" alt="Profile Picture" class="hero-profile-pic">
+            <div class="hero-main-text">
+                <div class="hero-title-bar">
+                    <h1>Mahmoud Said</h1>
+                    <h2>Robotics Engineer | AI & Embedded Systems Enthusiast</h2>
+                    <p>Building intelligent robots, autonomous systems, and sharing knowledge with the world.</p>
+                </div>
+                <div class="hero-about">
+                    Passionate about robotics, AI, and embedded systems. Experienced in ROS, computer vision, and real-world robotics projects. Always eager to solve challenging problems and collaborate on innovative ideas.
+                </div>
+                <div class="hero-actions">
+                    <a href="assets/Mahmoud_Said_ATS_Resume.pdf" class="download-cv-btn" download>Download CV</a>
+                </div>
+                <div class="hero-contact-bar">
+                    <a href="#" class="hero-contact-link" id="show-email-modal">✉️ Email</a>
+                    <a href="https://www.linkedin.com/in/mahmoud-said-a8a870201/" target="_blank" class="hero-contact-link">🔗 LinkedIn</a>
+                    <a href="https://github.com/RoboAlQuds2027" target="_blank" class="hero-contact-link">💻 GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main class="main-content">
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-icon">📦</span>
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⏳</span>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🛠️</span>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Technologies</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">📚</span>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Tutorials</div>
+            </div>
+        </section>
+        <!-- Work Experience Section -->
+        <section class="professional-section">
+            <h2 class="section-title">💼 Work Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <span class="card-icon">🚀</span>
+                    <h3 class="card-title">Senior Robotics Engineer</h3>
+                    <div class="card-subtitle">TechVision Robotics - Cairo, Egypt</div>
+                    <div class="card-duration">Jan 2023 - Present</div>
+                    <p class="card-description">
+                        Lead robotics engineer responsible for designing and implementing autonomous navigation systems for industrial robots. Managed a team of 5 engineers and delivered 8 major projects. Specialized in ROS2, sensor integration, and AI-powered decision making.
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">ROS2</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">LiDAR</span>
+                        <span class="skill-tag">Team Leadership</span>
+                        <span class="skill-tag">Project Management</span>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <span class="card-icon">🤖</span>
+                    <h3 class="card-title">Robotics Engineer</h3>
+                    <div class="card-subtitle">AutoMech Solutions - Cairo, Egypt</div>
+                    <div class="card-duration">Jun 2022 - Dec 2022</div>
+                    <p class="card-description">
+                        Developed automation solutions for manufacturing using robotic arms and computer vision. Improved production efficiency by 35%. Customized robotic solutions for industrial needs.
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">Industrial Automation</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">PLC Programming</span>
+                        <span class="skill-tag">Quality Control</span>
+                        <span class="skill-tag">Client Relations</span>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <span class="card-icon">🔬</span>
+                    <h3 class="card-title">Research Assistant</h3>
+                    <div class="card-subtitle">Cairo University Robotics Lab</div>
+                    <div class="card-duration">Sep 2020 - May 2022</div>
+                    <p class="card-description">
+                        Conducted research on multi-robot coordination and swarm intelligence. Published 3 papers and contributed to 2 research grants. Developed simulation environments for autonomous navigation.
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">Research</span>
+                        <span class="skill-tag">Gazebo</span>
+                        <span class="skill-tag">MATLAB</span>
+                        <span class="skill-tag">Academic Writing</span>
+                        <span class="skill-tag">Algorithm Development</span>
+                    </div>
+                </div>
+                <div class="experience-card">
+                    <span class="card-icon">📚</span>
+                    <h3 class="card-title">Engineering Intern</h3>
+                    <div class="card-subtitle">ElectroTech Industries - Cairo, Egypt</div>
+                    <div class="card-duration">Summer 2019</div>
+                    <p class="card-description">
+                        Gained hands-on experience in industrial automation and control systems. Assisted in designing and testing automated assembly lines. Learned about industrial standards and safety protocols.
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">Automation</span>
+                        <span class="skill-tag">Control Systems</span>
+                        <span class="skill-tag">PLC Programming</span>
+                        <span class="skill-tag">HMI Development</span>
+                        <span class="skill-tag">Technical Documentation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Education Section -->
+        <section class="professional-section">
+            <h2 class="section-title">🎓 Education</h2>
+            <div class="experience-grid">
+                <div class="education-card">
+                    <span class="card-icon">🎓</span>
+                    <h3 class="card-title">MSc in Robotics Engineering</h3>
+                    <div class="card-subtitle">Cairo University, Faculty of Engineering</div>
+                    <div class="card-duration">2020 - 2022</div>
+                    <p class="card-description">
+                        Specialized in autonomous systems, computer vision, and AI integration. Thesis: "Advanced Path Planning for Multi-Robot Systems in Dynamic Environments". Graduated with distinction (GPA: 3.8/4.0).
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">Path Planning</span>
+                        <span class="skill-tag">ROS</span>
+                        <span class="skill-tag">SLAM</span>
+                    </div>
+                </div>
+                <div class="education-card">
+                    <span class="card-icon">🔧</span>
+                    <h3 class="card-title">BSc in Mechatronics Engineering</h3>
+                    <div class="card-subtitle">Cairo University, Faculty of Engineering</div>
+                    <div class="card-duration">2016 - 2020</div>
+                    <p class="card-description">
+                        Foundation in mechanical, electrical, and software engineering. Senior project: "Autonomous Warehouse Robot with Voice Control". Graduated Summa Cum Laude (GPA: 3.9/4.0).
+                    </p>
+                    <div class="card-skills">
+                        <span class="skill-tag">Embedded Systems</span>
+                        <span class="skill-tag">Control Systems</span>
+                        <span class="skill-tag">Circuit Design</span>
+                        <span class="skill-tag">CAD/CAM</span>
+                        <span class="skill-tag">Arduino</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <h2 class="section-title">🧠 Skills</h2>
+            <div class="skills-tags">
+                <span class="skills-tag">ROS / ROS2</span>
+                <span class="skills-tag">Python</span>
+                <span class="skills-tag">C++</span>
+                <span class="skills-tag">OpenCV</span>
+                <span class="skills-tag">SLAM</span>
+                <span class="skills-tag">Embedded Systems</span>
+                <span class="skills-tag">AI / ML</span>
+                <span class="skills-tag">Gazebo</span>
+                <span class="skills-tag">TensorFlow</span>
+                <span class="skills-tag">Arduino</span>
+                <span class="skills-tag">Project Management</span>
+            </div>
+        </section>
+        <!-- Projects Section -->
+        <section class="professional-section">
+            <h2 class="section-title">📂 Projects</h2>
+            <div class="projects-grid">
+                <!--
+                =============================
+                PROJECTS SECTION INSTRUCTIONS:
+                =============================
+                - Only two projects are shown: Surveillance Drone and Cutting Grass Rover.
+                - To add a new project, copy a .project-card block and update the content.
+                - Replace the SVG with your project image if available.
+                - Edit the title, description, and tech tags as needed.
+                -->
+                <!-- Project 1: Surveillance Drone -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <!-- SVG drone icon placeholder -->
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="28" fill="#e3f2fd"/>
+                            <rect x="22" y="28" width="20" height="8" rx="4" fill="#00bcd4"/>
+                            <rect x="30" y="18" width="4" height="28" rx="2" fill="#007bff"/>
+                            <circle cx="32" cy="32" r="6" fill="#fff" stroke="#007bff" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">Surveillance Drone</div>
+                        <div class="project-category">Aerial Robotics</div>
+                        <div class="project-description">
+                            Designed and built an autonomous drone for real-time surveillance and mapping. Integrated computer vision for object detection and GPS-based navigation. Used ROS2 for control and data streaming.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">ROS2</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">PX4</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2: Cutting Grass Rover -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <!-- SVG rover icon placeholder -->
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="30" width="44" height="14" rx="7" fill="#00bcd4"/>
+                            <circle cx="18" cy="50" r="6" fill="#007bff"/>
+                            <circle cx="46" cy="50" r="6" fill="#007bff"/>
+                            <rect x="24" y="18" width="16" height="12" rx="4" fill="#e3f2fd"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">Cutting Grass Rover</div>
+                        <div class="project-category">Ground Robotics</div>
+                        <div class="project-description">
+                            Developed an autonomous rover for grass cutting in outdoor environments. Implemented SLAM for navigation, obstacle avoidance, and remote monitoring. Custom hardware and embedded control.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">SLAM</span>
+                            <span class="tech-tag">Embedded Systems</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">ROS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2 class="section-title">📫 Contact Me</h2>
+            <p style="margin-bottom:2rem;">
+                I'm always open to discussing new projects, innovative ideas, or opportunities to collaborate. Feel free to reach out to me through any of the platforms below:
+            </p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/mahmoud-said-robotics/" target="_blank" class="contact-link">🔗 LinkedIn</a>
+                <a href="https://github.com/username" target="_blank" class="contact-link">💻 GitHub</a>
+                <a href="mailto:mahmoud.said@example.com" class="contact-link">✉️ Email</a>
+            </div>
+        </section>
+    </main>
+    <footer style="background:#f8f9fa; padding:2rem 0; text-align:center;">
+        <p style="color:#666; font-size:0.9rem;">&copy; 2023 Mahmoud Said. All rights reserved. | Designed with ❤️ for robotics enthusiasts.</p>
+    </footer>
+
+    <!-- Email Modal (hidden by default) -->
+    <div class="email-modal-overlay" style="display:none;">
+        <div class="email-modal">
+            <h3>Contact Me</h3>
+            <p>Feel free to reach out via email for any inquiries, collaborations, or just to connect!</p>
+            <div class="email-address">mahmoudsaieed300@gmail.com</div>
+            <button class="close-btn" onclick="toggleEmailModal()">Close</button>
+        </div>
+    </div>
+    <!-- Email Modal Popup -->
+    <div id="email-modal-overlay" class="email-modal-overlay" style="display:none;">
+        <div class="email-modal">
+            <h3>Contact Email</h3>
+            <p class="email-address">mahmoudsaieed300@gmail.com</p>
+            <button class="close-btn" id="close-email-modal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle email modal visibility
+        function toggleEmailModal() {
+            const modal = document.querySelector('.email-modal-overlay');
+            const isVisible = getComputedStyle(modal).display === 'flex';
+            modal.style.display = isVisible ? 'none' : 'flex';
+        }
+
+        // Only handle modal for the hero email button
+        const showEmailBtn = document.getElementById('show-email-modal');
+        const emailModalOverlay = document.getElementById('email-modal-overlay');
+        const closeEmailBtn = document.getElementById('close-email-modal');
+        if (showEmailBtn && emailModalOverlay && closeEmailBtn) {
+            showEmailBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                emailModalOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+            closeEmailBtn.addEventListener('click', function() {
+                emailModalOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+            emailModalOverlay.addEventListener('click', function(e) {
+                if (e.target === emailModalOverlay) {
+                    emailModalOverlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Open external links in new tab, let internal links work normally
+        document.querySelectorAll('.hero-contact-link, .contact-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                const href = this.getAttribute('href');
+                // Only handle for external links (http/https)
+                if (this === showEmailBtn) {
+                    // Handled above
+                    return;
+                }
+                if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                    event.preventDefault();
+                    window.open(href, '_blank');
+                }
+                // For mailto: in contact section, let default happen
+            });
+        });
+    </script>
+</body>
+</html>

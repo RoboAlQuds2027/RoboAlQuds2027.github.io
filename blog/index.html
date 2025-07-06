@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Modern Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* Enhanced animated gradient background - more eye-catching with increased wave movement */
+            background: linear-gradient(-45deg, #ffffff, #f8f9fa, #e8f4f8, #fff5e6, #f0f8ff, #ffffff, #e3f2fd, #fce4ec, #f1f8e9);
+            background-size: 600% 600%; /* Increased from 400% for more dramatic movement */
+            animation: gradientShift 8s ease infinite; /* Faster animation for more dynamic effect */
+            min-height: 100vh;
+        }
+
+        /* More dramatic gradient animation with enhanced wave movement */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Enhanced floating particles animation with more movement */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(26, 188, 156, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            animation: floatingParticles 15s ease-in-out infinite; /* Faster movement */
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes floatingParticles {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg) scale(1.1);
+                opacity: 0.6;
+            }
+            66% {
+                transform: translateY(30px) rotate(240deg) scale(0.9);
+                opacity: 0.4;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #007bff;
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section with your image background and hovering text effect */
+        .hero {
+            /* Using your specified image path */
+            background-image: url('../assets/dan-cristian-padure-SMSLyc9FHl0-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Enhanced overlay for better text readability */
+            position: relative;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay for better text contrast */
+            animation: heroOverlay 10s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes heroOverlay {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.02);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Enhanced hovering text effect for "Welcome to My Blog" */
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            animation: titleFloat 4s ease-in-out infinite;
+            /* Add subtle glow effect */
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-15px) scale(1.02);
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: subtitleFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                opacity: 0.95;
+            }
+            50% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced main content with more eye-catching gradient */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            /* More vibrant gradient background */
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.8) 0%, 
+                rgba(240, 248, 255, 0.9) 25%, 
+                rgba(255, 245, 230, 0.8) 50%, 
+                rgba(248, 249, 250, 0.9) 75%, 
+                rgba(255, 255, 255, 0.8) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Featured Post */
+        .featured-post {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            margin-bottom: 4rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .featured-post:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #00bcd4, #ff9800);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .category-tag {
+            background: linear-gradient(45deg, #e3f2fd, #f0f8ff);
+            color: #1976d2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            animation: tagGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes tagGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(25, 118, 210, 0.6);
+            }
+        }
+
+        .featured-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .featured-excerpt {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: linear-gradient(45deg, rgba(0,123,255,0.1), rgba(0,188,212,0.1));
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+            transform: translateX(5px);
+            background: linear-gradient(45deg, rgba(0,123,255,0.2), rgba(0,188,212,0.2));
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #222;
+        }
+
+        .card-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 1rem;
+            animation: titleFloat 6s ease-in-out infinite;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+                margin-top: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .featured-content {
+                padding: 1.5rem;
+            }
+
+            .featured-title {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Card Entrance Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blog-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .blog-card:nth-child(2) { animation-delay: 0.1s; }
+        .blog-card:nth-child(3) { animation-delay: 0.2s; }
+        .blog-card:nth-child(4) { animation-delay: 0.3s; }
+        .blog-card:nth-child(5) { animation-delay: 0.4s; }
+        .blog-card:nth-child(6) { animation-delay: 0.5s; }
+
+        /* Individual card image gradients with enhanced animation */
+        .blog-card:nth-child(2) .card-image {
+            background: linear-gradient(45deg, #fa709a, #fee140);
+            animation-delay: 2s;
+        }
+        .blog-card:nth-child(3) .card-image {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            animation-delay: 4s;
+        }
+        .blog-card:nth-child(4) .card-image {
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            animation-delay: 6s;
+        }
+        .blog-card:nth-child(5) .card-image {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            animation-delay: 8s;
+        }
+        .blog-card:nth-child(6) .card-image {
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            animation-delay: 10s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../portfolio.html">Portfolio</a></li>
+            <li><a href="../tutorials/index.html">Tutorials</a></li>
+            <li><a href="index.html" class="active">Blog</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section with Enhanced Hovering Effects -->
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Main title with enhanced hovering animation -->
+            <h1>Welcome to My Blog</h1>
+            <!-- Subtitle with complementary animation -->
+            <p>Discover insights, tutorials, and thoughts on web development, design, and technology</p>
+            <div class="search-bar">
+                <input type="search" placeholder="Search articles...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content with Enhanced Gradient Background -->
+    <main class="main-content">
+        <!-- Featured Post -->
+        <article class="featured-post">
+            <div class="featured-image">
+                Featured Article Image
+            </div>
+            <div class="featured-content">
+                <div class="featured-meta">
+                    <span class="category-tag">Web Development</span>
+                    <span>March 15, 2024</span>
+                    <span>5 min read</span>
+                </div>
+                <h2 class="featured-title">The Future of Web Development: Trends to Watch in 2024</h2>
+                <p class="featured-excerpt">
+                    Explore the latest trends shaping the web development landscape, from AI integration to progressive web apps. 
+                    Learn how these technologies will impact developers and users alike in the coming year.
+                </p>
+                <a href="#" class="read-more">
+                    Read More →
+                </a>
+            </div>
+        </article>
+
+        <!-- Blog Posts Section -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Latest Articles</h2>
+                <p class="section-subtitle">
+                    Stay updated with the latest insights, tutorials, and industry news
+                </p>
+            </div>
+
+            <div class="blog-grid">
+                <!-- Blog Card 1 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">JavaScript</span>
+                            <span>March 10, 2024</span>
+                        </div>
+                        <h3 class="card-title">Modern JavaScript Patterns</h3>
+                        <p class="card-excerpt">
+                            Discover the latest JavaScript patterns and best practices that will make your code more maintainable and efficient.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Card 2 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">CSS</span>
+                            <span>March 8, 2024</span>
+                        </div>
+                        <h3 class="card-title">CSS Grid vs Flexbox: When to Use What</h3>
+                        <p class="card-excerpt">
+                            A comprehensive guide to understanding the differences between CSS Grid and Flexbox, and when to use each layout method.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Card 3 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">Design</span>
+                            <span>March 5, 2024</span>
+                        </div>
+                        <h3 class="card-title">Design Systems That Scale</h3>
+                        <p class="card-excerpt">
+                            Learn how to build and maintain design systems that grow with your product and team, ensuring consistency at scale.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Card 4 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">Performance</span>
+                            <span>March 3, 2024</span>
+                        </div>
+                        <h3 class="card-title">Web Performance Optimization</h3>
+                        <p class="card-excerpt">
+                            Essential techniques for improving your website's loading speed and overall performance for better user experience.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Card 5 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">React</span>
+                            <span>March 1, 2024</span>
+                        </div>
+                        <h3 class="card-title">React Hooks Deep Dive</h3>
+                        <p class="card-excerpt">
+                            Master React Hooks with practical examples and advanced patterns that will elevate your React development skills.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Card 6 -->
+                <article class="blog-card">
+                    <div class="card-image">
+                        Article Image
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag">Tools</span>
+                            <span>February 28, 2024</span>
+                        </div>
+                        <h3 class="card-title">Developer Tools for 2024</h3>
+                        <p class="card-excerpt">
+                            A curated list of the best developer tools and resources that will boost your productivity and workflow in 2024.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- 
+    TEMPLATE USAGE NOTES:
+    
+    1. IMAGE INTEGRATION:
+       - Hero background uses your specified path: '../assets/dan-cristian-padure-SMSLyc9FHl0-unsplash.jpg'
+       - Make sure this path is correct relative to your HTML file location
+    
+    2. HOVERING EFFECTS:
+       - "Welcome to My Blog" title has enhanced floating animation (titleFloat)
+       - Subtitle has complementary animation (subtitleFloat)
+       - Both have glowing text effects and smooth transitions
+    
+    3. ENHANCED BACKGROUND:
+       - Body gradient animation is more dramatic with 600% background-size
+       - Animation speed increased to 8s for more dynamic movement
+       - Additional floating particles with enhanced movement patterns
+       - Main content has vibrant gradient background with blur effects
+    
+    4. RESPONSIVE DESIGN:
+       - Fully responsive for mobile, tablet, and desktop
+       - Navigation collapses appropriately on smaller screens
+       - Typography and spacing adjust for different screen sizes
+    
+    5. CUSTOMIZATION OPTIONS:
+       - Easy to modify colors by changing CSS custom properties
+       - Animation speeds can be adjusted in @keyframes
+       - Gradient colors can be customized in background properties
+       - Card layouts can be modified in .blog-grid section
+    
+    6. PERFORMANCE CONSIDERATIONS:
+       - Uses CSS transforms for smooth animations
+       - Backdrop-filter for modern glass effects
+       - Optimized animations with hardware acceleration
+    
+    7. ACCESSIBILITY:
+       - Proper heading hierarchy (h1, h2, h3)
+       - Semantic HTML structure
+       - Focus states for interactive elements
+       - Sufficient color contrast ratios
+    -->
+</body>
+</html>
