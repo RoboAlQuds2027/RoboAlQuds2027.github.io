@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><!-- Tutorial Title Here --></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* Summer sea vibe gradient: multi-color */
+            background: linear-gradient(to bottom, 
+                #ffffff 0%,
+                #00F2FF 30%,
+                #00b8ff 40%,
+                #00719c 70%,
+                #00415a 100%
+            );
+            min-height: 100vh;
+        }
+        
+
+        /* Gradient animation matching main page */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Enhanced floating particles animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(26, 188, 156, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            animation: floatingParticles 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes floatingParticles {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg) scale(1.1);
+                opacity: 0.6;
+            }
+            66% {
+                transform: translateY(30px) rotate(240deg) scale(0.9);
+                opacity: 0.4;
+            }
+        }
+
+        /* Navigation matching main page style */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #007bff;
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Tutorial Container with modern styling */
+        .tutorial-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tutorial header styling */
+        .tutorial-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .tutorial-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-header h1 {
+            color: #222;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tutorial-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Default: fluorescent green-blue */
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,255,180,0.10);
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge.difficulty-beginner {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Fluorescent green-blue */
+            color: #003c2f;
+        }
+
+        .difficulty-badge.difficulty-intermediate {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Fluorescent yellow-orange */
+            color: #7a4f00;
+        }
+
+        .difficulty-badge.difficulty-advanced {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Fluorescent red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(2) {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Yellow-orange */
+            color: #7a4f00;
+        }
+
+        .tutorial-meta span:nth-child(3) {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(4) {
+            background: linear-gradient(90deg, #00eaff 0%, #00ffb0 100%); /* Blue-green */
+            color: #003c2f;
+        }
+
+        /* Content styling */
+        .tutorial-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .tutorial-content h1 {
+            color: #222;
+            font-size: 2.2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .tutorial-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-content h2 {
+            color: #007bff;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h3 {
+            color: #0056b3;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h4 {
+            color: #495057;
+            font-size: 1.2rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content p {
+            margin-bottom: 1.2rem;
+            color: #555;
+        }
+
+        .tutorial-content ul, .tutorial-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #555;
+        }
+
+        .tutorial-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .tutorial-content blockquote {
+            background: rgba(0, 123, 255, 0.05);
+            border-left: 4px solid #007bff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            color: #0056b3;
+            font-style: italic;
+            position: relative;
+        }
+
+        .tutorial-content blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: #007bff;
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Code blocks styling */
+        .tutorial-content pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tutorial-content code {
+            background: rgba(0, 123, 255, 0.08);
+            color: #0056b3;
+            border-radius: 4px;
+            padding: 0.2rem 0.4rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.98em;
+        }
+
+        .tutorial-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        /* Links styling */
+        .tutorial-content a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tutorial-content a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            transition: width 0.3s ease;
+        }
+
+        .tutorial-content a:hover::after {
+            width: 100%;
+        }
+
+        .tutorial-content a:hover {
+            color: #0056b3;
+        }
+
+        /* Images styling */
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tables styling */
+        .tutorial-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .tutorial-content th, .tutorial-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .tutorial-content th {
+            background: linear-gradient(45deg, #007bff, #00bcd4);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tutorial-content tr:hover {
+            background: rgba(0, 123, 255, 0.05);
+        }
+
+        /* CTA Button styling - clear orange with white text */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, #00d0ff 0%, #3cff53 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.15);
+            margin: 1rem 0;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(255,60,60,0.18);
+        }
+
+        .tutorial-content a.cta-button {
+            color: #fff !important;
+        }
+
+        /* Navigation buttons - keep style but more visible */
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7a4f00;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Navigation links - keep both buttons on one line, at both sides */
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 123, 255, 0.2);
+        }
+
+        /* Make the 'Next Tutorial' button green */
+        .nav-button.next-tutorial {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%);
+            color: #003c2f;
+        }
+
+        .nav-button.next-tutorial:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .tutorial-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .tutorial-header h1 {
+                font-size: 2rem;
+            }
+
+            .tutorial-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .tutorial-content h2 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .tutorial-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content pre {
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            body::before {
+                display: none;
+            }
+            
+            .tutorial-container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                background: white;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+
+        /* Prism.js overrides for better integration */
+        .tutorial-content pre[class*="language-"] {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem 1rem;
+            overflow-x: auto;
+        }
+    </style>
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../portfolio.html">Portfolio</a></li>
+            <li><a href="../tutorials/index.html" class="active">Tutorials</a></li>
+            <li><a href="../blog/index.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <div class="tutorial-container">
+        <!-- Tutorial Header -->
+        <div class="tutorial-header">
+            <h1>🌟Docker for Complete Beginners (Robotics)</h1>
+            <div class="tutorial-meta">
+                <span class="difficulty-badge difficulty-beginner">Beginner<!-- Beginner | Intermediate | Advanced --></span>
+                <span>⏱️ 30 min<!-- Duration (e.g., 2-3 hours) --></span>
+                <span>📅 August 2025<!-- Date (e.g., January 2025) --></span>
+                <span>🏷️ Docker<!-- Tags (e.g., ROS 2, Python, Robotics) --></span>
+            </div>
+        </div>
+
+        <!-- Tutorial Content -->
+        <div class="tutorial-content">
+            <!--
+                HOW TO USE THIS TEMPLATE (Markdown):
+                ===================================
+                
+                1. Write your tutorial content between the <script type="text/markdown" id="md-raw"> tags below.
+                2. Do NOT indent your Markdown content. Start each line at the very beginning (no spaces or tabs).
+                3. Indented lines will render as code blocks!
+                
+                Example (correct):
+                <script type="text/markdown" id="md-raw">
+# My Tutorial Title
+Welcome!
+- List item
+</script>
+                
+                Example (incorrect):
+                <script type="text/markdown" id="md-raw">
+    # My Tutorial Title
+    Welcome!
+    - List item
+</script>
+                
+                Supported Markdown: # ## ###, **bold**, *italic*, [links](url), ![img](url), code blocks, lists, blockquotes, tables, ---
+            -->
+            
+            <script type="text/markdown" id="md-raw">
+
+# Complete Docker Tutorial
+
+## 🐳 What is Docker? (Made Simple!)
+
+### The Restaurant Analogy 🍽️
+
+Imagine you're a chef who invented an amazing recipe. You want to share it so anyone can make the exact same dish anywhere in the world:
+
+**Without Docker (Traditional Way):**
+- You write down the recipe
+- Each person needs to buy ingredients from their local store (different brands, qualities)
+- They need the right pots, pans, and stove (different operating systems)
+- Results vary: "It doesn't taste the same!" or "It won't cook properly!"
+
+**With Docker (The Magic Way):**
+- You pack the recipe + exact ingredients + cooking equipment + mini-kitchen into a magical box
+- Send the box anywhere in the world
+- Open the box → perfect dish every time, identical results!
+
+### Real-World Translation 💻
+
+**Without Docker:**
+- You write software on your computer
+- Share code with teammates
+- They spend hours installing dependencies, different versions, configuration issues
+- "It works on my machine!" problem
+
+**With Docker:**
+- Pack your software + dependencies + operating system into a container
+- Share the container
+- Runs identically on any computer with Docker installed
+
+---
+
+## 🤖 Why This Matters for Robotics
+
+**Traditional Robot Development Problems:**
+- Robot lab computer has ROS Melodic, your laptop has Noetic → conflicts!
+- New team member spends 3 days just setting up environment
+- Simulation works on one computer but not another
+- "My robot code worked yesterday, what changed?"
+
+**With Docker:**
+- Complete robot environment in a container
+- New team member: download container → working robot development in 5 minutes
+- Same environment everywhere: laptop, lab computer, actual robot
+- Time-travel: run old robot code with its original environment anytime
+
+---
+
+## 🧠 Mental Model Check
+
+Before we continue, let's make sure you understand:
+
+**Quiz 1**: If Docker is like a shipping container for software, what would be inside a "robot container"?
+<details>
+<summary>Click to see answer</summary>
+
+A robot container might include:
+- ROS2 operating system
+- Robot navigation software  
+- Camera processing tools
+- All the specific versions that work together
+- Configuration files for your specific robot
+</details>
+
+---
+
+## 📋 Prerequisites (Be Honest!)
+
+**Essential (Must Have):**
+- Linux computer (Ubuntu 20.04/22.04 recommended)
+- Can open terminal and type basic commands
+- 1-2 hours of focused time (not 45 minutes - be realistic!)
+
+**Helpful (But We'll Explain):**
+- Basic understanding of files and folders
+- Seen a robot or watched robot videos
+- Curious about how software works
+
+**Don't Worry If You Don't Know:**
+- What ROS is (we'll explain gradually)
+- Advanced Linux commands (we'll show everything)
+- Programming (not required for this tutorial)
+
+---
+
+## 🚀 Chapter 1: Installing Docker (Safety First!)
+
+### 🛡️ Safety Check: Will This Harm My Computer?
+
+**Short Answer**: No, Docker is very safe and widely used.
+
+**Detailed Safety Info:**
+- Docker is used by millions of developers and major companies
+- It creates isolated containers that can't damage your main system
+- We'll show you how to completely remove Docker later if needed
+- Everything runs in isolation - like having multiple separate computers
+
+### Step 1: Update Your System
+```bash
+# Copy and paste this command, then press Enter
+sudo apt-get update
+```
+
+**What's happening here?** 
+- `sudo` = "Super User Do" - asking for admin permissions (like "Run as Administrator" on Windows)
+- `apt-get` = Ubuntu's software installer
+- `update` = download the latest list of available software
+
+**You'll see**: Lots of text scrolling - this is normal! Wait until you see your command prompt again.
+
+### Step 2: Install Helper Tools
+```bash
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+```
+
+**Why do we need these?** Think of it like needing the right tools before building furniture:
+- `apt-transport-https`: Secure connection tools
+- `ca-certificates`: Security certificates (like ID cards for websites)
+- `curl`: Tool to download files from internet
+- `gnupg-agent`: Digital signature verification
+- `software-properties-common`: Tools to add new software sources
+
+### Step 3: Add Docker's Digital Signature
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+**What's this doing?** Like getting a stamp of authenticity:
+- Docker company provides a digital signature
+- This ensures we download the real Docker, not a fake version
+- Security step to protect your computer
+
+### Step 4: Tell Ubuntu Where to Find Docker
+```bash
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+```
+
+**Explanation**: Like adding a new store to your shopping list:
+- Ubuntu needs to know where to download Docker from
+- This adds Docker's official store to Ubuntu's software catalog
+
+### Step 5: Install Docker
+```bash
+# Update the software list (now includes Docker)
+sudo apt-get update
+
+# Install Docker and its components
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+**What gets installed:**
+- `docker-ce`: The main Docker engine (the heart)
+- `docker-ce-cli`: Command line tools (how you talk to Docker)  
+- `containerd.io`: Container runtime (what actually runs containers)
+
+### Step 6: Test Installation
+```bash
+sudo docker run hello-world
+```
+
+**What should happen:**
+1. Docker downloads a tiny test container
+2. Runs it
+3. The container prints a welcome message
+4. Container stops automatically
+
+**If you see a welcome message with ASCII art → SUCCESS!** 🎉
+
+---
+
+## 🔧 Chapter 2: Setting Up Docker for Daily Use
+
+### Understanding Docker as a Service
+
+Docker runs as a "service" in the background, like:
+- Your Wi-Fi connection (always running)
+- Your antivirus (always monitoring)
+- Docker daemon (always ready to run containers)
+
+### Make Docker Start Automatically
+```bash
+# Start Docker now
+sudo systemctl start docker
+
+# Make Docker start when computer boots (like Wi-Fi auto-connect)
+sudo systemctl enable docker
+
+# Check if Docker is happy and running
+sudo systemctl status docker
+```
+
+**What to look for in status:**
+- Green text saying "active (running)" = ✅ Good!
+- Red text or "inactive" = ❌ Problem (see troubleshooting)
+
+### Stop Typing `sudo` Every Time!
+
+**Current Problem**: You need `sudo` for every Docker command
+```bash
+sudo docker run hello-world  # Annoying!
+```
+
+**Solution**: Add yourself to the Docker group
+```bash
+# Add your username to the docker group
+sudo usermod -aG docker $USER
+
+# Verify it worked (after next step)
+groups $USER
+```
+
+### ⚠️ CRITICAL STEP: Restart Your Session
+
+**You MUST do this or nothing will work!**
+
+**Option 1**: Log out completely, then log back in
+**Option 2**: Restart your computer
+**Option 3**: Open a new terminal
+
+### Test Your Setup
+```bash
+# This should work WITHOUT sudo now
+docker run hello-world
+
+# If it still asks for sudo, you forgot to restart your session!
+```
+
+---
+
+## 📦 Chapter 3: Images vs Containers (The Foundation)
+
+### The Blueprint Analogy 🏗️
+
+**Image = House Blueprint**
+- Detailed plans for building a house
+- Shows exactly what goes where
+- Can build multiple identical houses from one blueprint
+- Blueprint itself isn't a house you can live in
+
+**Container = Actual House Built from Blueprint**
+- Real house you can enter and use
+- Built from the blueprint (image)
+- Can modify the house without changing the blueprint
+- Multiple houses can be built from the same blueprint
+
+### Software Translation 💻
+
+**Image = Software Recipe**
+- Contains: Operating system + your application + all dependencies
+- Like a complete recipe with ingredients list
+- Stored on your computer but not running
+- Can create multiple containers from one image
+
+**Container = Running Instance**
+- Actually executing the software
+- Using computer resources (CPU, memory)
+- Can be started, stopped, restarted
+- Each container is independent
+
+### Visual Understanding 👁️
+
+```
+Docker Image (Static)              Docker Container (Running)
+┌─────────────────┐               ┌─────────────────┐
+│   Ubuntu OS     │  ──build──►   │   Ubuntu OS     │
+│   Python 3.9    │               │   Python 3.9    │ ◄── CPU, Memory
+│   Your App      │               │   Your App      │
+│   Dependencies  │               │   Dependencies  │ ◄── Network, Disk
+└─────────────────┘               └─────────────────┘
+    (Like a CD)                      (Like playing music)
+```
+
+### Download Your First Images
+
+```bash
+# Download a basic Linux environment
+docker pull ubuntu:latest
+
+# Download a Python development environment  
+docker pull python:3.9
+```
+
+**What's happening:**
+- `docker pull` = download an image
+- `ubuntu:latest` = Ubuntu operating system, newest version
+- Images download in layers (you'll see this happening)
+
+### See What Images You Have
+```bash
+docker images
+```
+
+**Understanding the output:**
+```
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+ubuntu        latest    1318b700e415   2 weeks ago    72.8MB
+python        3.9       a1b2c3d4e5f6   1 month ago    885MB
+hello-world   latest    d1165f221234   4 months ago   13.3kB
+```
+
+- **REPOSITORY**: Name of the software
+- **TAG**: Version (latest = newest available)
+- **SIZE**: How much disk space it uses
+- **CREATED**: When this version was made
+
+---
+
+## 🏃 Chapter 4: Running Your First Container
+
+### Interactive Mode: Step Into the Container
+
+```bash
+# Run Ubuntu and open a terminal inside it
+docker run -it ubuntu:latest /bin/bash
+```
+
+**Breaking down the command:**
+- `docker run` = create and start a new container
+- `-it` = interactive mode with terminal (like opening a window you can type in)
+- `ubuntu:latest` = use the Ubuntu image we downloaded
+- `/bin/bash` = start a command line inside the container
+
+**You'll notice:**
+- Your command prompt changes (you're now "inside" the container)
+- It's like you logged into a different computer
+- This is a completely separate Ubuntu system
+
+### Exploring Inside the Container
+
+Try these commands inside the container:
+```bash
+# Where am I?
+pwd
+# Output: /
+
+# What files are here?
+ls
+# You'll see: bin  boot  dev  etc  home  lib  media...
+
+# What operating system is this?
+cat /etc/os-release
+# Shows Ubuntu version info
+
+# Let's install something (won't affect your main computer!)
+apt-get update
+apt-get install -y curl
+
+# Test the new program
+curl --version
+
+# When you're done exploring
+exit
+```
+
+**Important Realizations:**
+- You just installed software in a completely separate environment
+- Your main computer is unchanged
+- When you `exit`, you leave the container
+
+### Background Mode: Services Running Quietly
+
+```bash
+# Run a web server in the background
+docker run -d --name my-web-server nginx:latest
+```
+
+**New concepts:**
+- `-d` = detached mode (runs in background)
+- `--name my-web-server` = give it a memorable name
+- `nginx:latest` = web server software
+
+**What happened?**
+- Docker downloaded Nginx web server image (if not already downloaded)
+- Started a container running the web server
+- Container runs in background (you can continue using your terminal)
+
+---
+
+## 👀 Chapter 5: Managing Containers (Your New Superpowers)
+
+### See What's Running
+```bash
+# Show containers that are currently running
+docker ps
+
+# Show ALL containers (running and stopped)
+docker ps -a
+```
+
+**Understanding the output:**
+```
+CONTAINER ID   IMAGE     COMMAND                  STATUS        PORTS      NAMES
+abc123def456   nginx     "/docker-entrypoint.…"   Up 5 minutes  80/tcp     my-web-server
+```
+
+- **CONTAINER ID**: Unique identifier (like a serial number)
+- **IMAGE**: Which image was used to create this container
+- **STATUS**: Running? Stopped? For how long?
+- **NAMES**: The friendly name you gave it (or auto-generated)
+
+### Container Control Commands
+
+```bash
+# Stop a running container
+docker stop my-web-server
+
+# Start a stopped container
+docker start my-web-server
+
+# Restart a container (stop then start)
+docker restart my-web-server
+
+# Remove a container completely (must be stopped first)
+docker stop my-web-server
+docker rm my-web-server
+
+# Force remove (stop and remove in one command)
+docker rm -f my-web-server
+```
+
+### Get Information About Containers
+
+```bash
+# View what a container is doing (its output)
+docker logs my-web-server
+
+# Follow the logs in real-time (like watching live TV)
+docker logs -f my-web-server
+# Press Ctrl+C to stop following
+
+# Get detailed technical information
+docker inspect my-web-server
+```
+
+---
+
+## 🤖 Chapter 6: Your First ROS Container (Robotics Begins!)
+
+### What is ROS? (Quick Intro)
+
+**ROS** = Robot Operating System (but it's not really an operating system!)
+
+Think of ROS like:
+- **The nervous system** of a robot
+- **Language that robot parts use** to communicate
+- **Toolbox** with pre-built robot software
+
+**Example**: Instead of writing code to control a camera from scratch, ROS provides ready-made camera tools.
+
+### Download ROS Environment
+
+```bash
+# Download ROS2 (modern version, smaller size)
+docker pull ros:humble
+```
+
+**Why ROS2 in Docker?**
+- Installing ROS2 normally takes hours and can break your system
+- Docker gives you complete ROS2 environment in minutes
+- Multiple ROS versions can coexist without conflicts
+
+### Run ROS2 Container (With Graphics Support)
+
+```bash
+sudo apt install x11-xserver-utils
+
+# Enable graphics for robot visualization tools
+xhost +local:docker
+
+# Run ROS2 with GUI support
+docker run -it \
+    --env="DISPLAY" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    ros:humble \
+    bash
+
+# get attached to the container or open a new terminal to access it
+docker exec -it <container_id>  
+```
+
+**New concepts for robotics:**
+- `xhost +local:docker` = allow Docker to display graphics on your screen
+- `--env="DISPLAY"` = pass display information to container
+- `--volume="/tmp/.X11-unix..."` = share graphics system with container
+
+### Your First Robot Commands
+
+Inside the ROS2 container, try these:
+```bash
+# Check ROS2 is working
+ros2 --help
+
+# List available robot software packages
+ros2 pkg list | head -10
+
+# Start a virtual robot publisher (sends robot data)
+ros2 topic pub /robot_position geometry_msgs/Twist "linear: {x: 1.0}" 
+
+# See what robot data is being published
+ros2 topic list
+
+# Listen to the robot data
+ros2 topic echo /robot_position
+
+# Stop the background publisher
+kill %1
+
+# Exit the container
+exit
+```
+
+**What just happened?**
+1. You ran a complete robot development environment
+2. Created a virtual robot that publishes movement data
+3. Listened to that robot data
+4. All without installing anything on your main system!
+
+---
+
+## 📦 Chapter 7: Writing a Dockerfile
+
+Up to now, we’ve been running containers from existing images. But what if we want to **make permanent changes** or package our own setup?
+👉 The way to do this is by creating a **Dockerfile**, which describes how to build a new image.
+
+### 🗂 Step 1: Create a Project Directory
+
+First, let’s make a new folder for our project:
+
+```bash
+mkdir my_project
+cd my_project
+```
+
+You can open it in VS Code (or your favorite editor):
+
+```bash
+code .
+```
+
+### 📄 Step 2: Create a Dockerfile
+
+Inside your project folder, create a new file called:
+
+```
+Dockerfile
+```
+
+*(No extension is needed — just `Dockerfile`)*
+
+💡 If you’re using VS Code, it’s helpful to install the **Docker extension** for syntax highlighting.
+
+### 🏗 Step 3: Base Image (`FROM`)
+
+Every Dockerfile starts with a **base image**.
+This tells Docker what to build *on top of*.
+
+For example, let’s base our project on **ROS Humble**:
+
+```dockerfile
+FROM ros:humble
+```
+
+You could also use smaller base images like **Alpine Linux** (tiny, \~3MB) or larger images with lots of tools pre-installed.
+
+### ⚙️ Step 4: Install Packages (`RUN`)
+
+Next, we often need to install extra software.
+
+In Docker, everything runs as **root by default**, so we don’t need `sudo`.
+Let’s install `nano` as an example text editor:
+
+```dockerfile
+RUN apt-get update && apt-get install -y nano
+```
+
+💡 `RUN` executes any terminal command during the image build.
+
+### 📂 Step 5: Copy Files (`COPY`)
+
+We can copy files or folders from our computer **into the image**.
+
+- Suppose we have a folder called `config/` with a file `my_config.yaml`.
+- if you don't have this folder, create it now and add a sample `my_config.yaml` file inside.
+- you can write any configuration you like, for example:
+```yaml
+robot_name: MyRobot
+robot_type: Humanoid
+sensors:
+  - type: Camera
+    resolution: 1920x1080
+  - type: Lidar
+    range: 30
+```
+- We want this to live inside the image at `/site_config`.
+
+```dockerfile
+COPY config /site_config
+```
+
+⚠️ These files are **baked into the image**. To update them, you must rebuild the image.
+
+### 🛠 Example Dockerfile
+
+Here’s what our full Dockerfile looks like:
+
+```dockerfile
+# Start from ROS Humble base image
+FROM ros:humble
+
+# Install nano editor
+RUN apt-get update && apt-get install -y nano
+
+# Copy configuration files
+COPY config /site_config
+```
+
+### 🔨 Step 6: Build the Image
+
+Now let’s build our image. From the project directory:
+
+```bash
+docker build -t my_image .
+```
+
+* `-t my_image` → gives your image a name (`my_image`)
+* `.` → means “use the Dockerfile in this directory”
+
+Docker will show the steps as it builds (installing `nano`, copying files, etc.).
+
+
+### 📋 Step 7: Verify the Image
+
+List your available images:
+
+```bash
+docker images
+```
+
+You should see `my_image` in the list ✅
+
+### 🚀 Step 8: Run a Container from the Image
+
+Finally, start a container based on your new image:
+
+```bash
+docker run -it my_image
+```
+
+Now inside the container, check if your files exist:
+
+```bash
+ls /
+```
+
+You should see:
+
+```
+site_config/
+```
+
+And you can even open them with `nano`:
+
+```bash
+nano /site_config/my_config.yaml
+```
+
+### 🎉 Summary
+
+* `FROM` → choose a base image
+* `RUN` → run commands (install tools, set up environment)
+* `COPY` → copy files from your computer into the image
+* `docker build` → build an image from your Dockerfile
+* `docker run` → launch containers from your custom image
+
+---
+## 📂 Chapter 8: Shared Files (And a Sneaky Problem)
+
+### The Development Challenge
+
+**The Problem**: You want to write robot code on your computer but run
+it in a ROS container.
+
+**The Solution**: Shared folders!
+
+Think of it like having a magic folder that exists in both places at
+once - your computer and inside the container.
+
+### Create Your Shared Workspace
+
+``` bash
+# Create a workspace on your computer
+mkdir -p ~/my_code/source
+cd ~/my_code
+
+# Create a test file from your host computer
+echo "Hello from host computer" > source/existing_file.txt
+```
+
+### Share the Folder with Container
+
+``` bash
+# Run container with shared folder
+docker run -it -v $PWD/source:/my_source_code my_image
+```
+
+Breaking down the new parts:
+
+-   `-v` = volume/mount flag (share folders)
+-   `$PWD/source` = your local source directory (must be absolute path)
+-   `:/my_source_code` = where it appears inside the container
+
+Both paths are separated by a colon `:`
+
+### Test the Magic
+
+Inside the container, try these commands:
+
+``` bash
+# Check if your host file is there
+ls /my_source_code
+# You should see: existing_file.txt
+
+# Read the file you created on your host
+cat /my_source_code/existing_file.txt
+# Should show: Hello from host computer
+
+# Create a new file FROM INSIDE the container
+echo "Hello from container" > /my_source_code/new_file.yaml
+echo "This was created inside Docker" >> /my_source_code/new_file.yaml
+
+# Exit the container
+exit
+```
+
+### Check What Happened on Your Host
+
+Back on your host computer:
+
+``` bash
+# Look at your source directory
+ls source/
+
+# You should see both files:
+# existing_file.txt  new_file.yaml
+
+# Read the file created from inside the container
+cat source/new_file.yaml
+```
+
+Amazing! The file created inside the container appears on your host
+computer!
+
+### 😟 But Wait... There's a Problem
+
+Look more carefully at the file permissions:
+
+``` bash
+# Check detailed file information
+ls -la source/
+
+# You'll see something like this:
+# -rw-r--r-- 1 yourname yourname 22 Dec 10 15:25 existing_file.txt
+# -rw-r--r-- 1 root     root     35 Dec 10 15:30 new_file.yaml
+```
+
+**The Problem:**
+
+-   `existing_file.txt` is owned by you
+-   `new_file.yaml` is owned by root!
+
+What this means:
+
+-   You might not be able to edit the file easily
+-   Some text editors will complain
+-   It's a security and usability issue
+
+### Why This Happens
+
+Everything inside Docker containers runs as root by default. So when the
+container creates files, they get root ownership on your host system.
+
+⚡ Don't worry! We'll fix this annoying problem in the next chapter and go furter in next tutorial.
+
+------------------------------------------------------------------------
+
+### Real-World Example: ROS Development
+
+This file sharing is incredibly powerful for robotics:
+
+``` bash
+# Create a ROS workspace
+mkdir -p ~/robot_workspace/src
+cd ~/robot_workspace
+
+# Share it with a ROS container
+docker run -it \
+    -v $PWD:/workspace \
+    --workdir /workspace \
+    ros:humble
+
+# Inside container: create ROS packages, build code
+# Outside container: edit code with your favorite editor
+# Both sides see the changes instantly!
+```
+
+Next up: We'll solve that pesky permission problem so you can work
+seamlessly between your host and containers.
+
+---
+
+## 🔧 Chapter 9: Fixing File Permissions (The Root Problem)
+
+Remember that issue we saw at the end of chapter 8? When we created files inside the container, they were owned by `root` on our host system. This is annoying and can cause problems.
+
+### Understanding the Problem
+
+```bash
+# Inside your shared directory
+ls -la
+
+# You'll see something like:
+# -rw-r--r-- 1 root root 25 Dec 10 15:30 new_file.yaml
+```
+
+The file is owned by `root` because everything in Docker containers runs as root by default.
+
+### The Solution: Run as Your User
+
+```bash
+# Instead of just:
+docker run -it -v $PWD/source:/my_source_code my_image
+
+# Use this:
+docker run -it --user $(id -u):$(id -g) -v $PWD/source:/my_source_code my_image
+```
+
+**What this does:**
+- `$(id -u)` gets your user ID
+- `$(id -g)` gets your group ID  
+- `--user` tells Docker to run as that user instead of root
+
+### Test It Out
+
+```bash
+# Run with user permissions
+docker run -it --user $(id -u):$(id -g) -v $PWD/source:/my_source_code my_image
+
+# Create a file inside the container
+echo "test content" > /my_source_code/test_file.txt
+
+# Exit and check permissions on host
+exit
+ls -la source/
+
+# Now the file should be owned by you, not root!
+```
+
+**Note**: Some things might not work when not running as root (like installing packages), but for development work, this is usually what you want.
+
+---
+
+## 🧹 Chapter 10: Keeping Your System Clean
+
+As you experiment with Docker, you'll accumulate containers and images. Here's how to manage them:
+
+### See What You Have
+
+```bash
+# See running containers
+docker ps
+
+# See all containers (including stopped)
+docker ps -a
+
+# See all images
+docker images
+
+# See disk usage
+docker system df
+```
+
+### Clean Up Responsibly
+
+```bash
+# Remove stopped containers
+docker container prune
+
+# Remove unused images
+docker image prune
+
+# Remove everything unused (be careful!)
+docker system prune
+
+# Remove specific containers/images
+docker rm container_name
+docker rmi image_name
+```
+
+### Pro Tip: Auto-Cleanup
+
+Add `--rm` to your docker run commands to automatically delete containers when they stop:
+
+```bash
+docker run --rm -it ubuntu bash
+# Container gets deleted automatically when you exit
+```
+
+---
+
+## 🚀 Chapter 11: What's Next?
+
+Congratulations! You now know the fundamentals of using Docker for robotics development. Here's what we covered:
+
+### ✅ What You've Learned
+
+- **Installing Docker** properly on Linux
+- **Understanding images vs containers** 
+- **Running interactive containers** for development
+- **Creating custom Docker images** with Dockerfile
+- **Sharing files** between host and container
+- **Managing containers and images**
+- **Fixing permission problems**
+
+### 🎯 Your Next Future Steps
+
+1. **Practice with ROS**: Try running different ROS packages in containers
+2. **Experiment with hardware**: Connect cameras, sensors to containers  
+3. **Build your own images**: Create Dockerfiles for your robot projects
+4. **Learn advanced topics**: Networking, GUI apps, multi-container setups
+
+### 🔗 Coming Up in the Series
+
+the next topics will cover:
+
+- **Network connections** between containers and host
+- **Running graphical programs** (RViz, Gazebo) in containers
+- **Advanced user management** and sudo inside Docker
+- **Hardware access** for cameras, sensors, and robot hardware
+
+### 🤖 Robotics-Specific Tips
+
+**For ROS Development:**
+```bash
+# Always use specific ROS versions
+docker pull ros:humble
+docker pull ros:iron
+docker pull ros:jazzy
+
+# Mount your workspace
+docker run -it -v $PWD:/workspace --workdir /workspace ros:humble
+
+# Enable graphics for RViz/Gazebo (basic version)
+xhost +local:docker
+docker run -it --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ros:humble
+```
+
+**Common Robotics Containers to Try:**
+- `ros:humble` - ROS 2 Humble
+- `osrf/ros:humble-desktop` - ROS 2 with GUI tools
+- `moveit/moveit2:humble-release` - Motion planning
+- `gazebosim/gazebo:garden` - Robot simulation
+
+---
+
+## 🎉 Final Thoughts
+
+Docker might seem complicated at first, but as you've seen, the basic workflow is straightforward:
+
+1. **Pull or build** an image with your development environment
+2. **Run** it as a container with your files mounted
+3. **Develop** your robot software inside the safe, isolated environment
+4. **Deploy** the same container to your robot hardware
+
+The key insight is that Docker isn't just about deployment - it's incredibly powerful for **development** too. No more "it works on my machine" problems, no more spending hours setting up ROS environments, and no more conflicts between different projects.
+
+### Keep Learning!
+
+The Docker ecosystem is huge, and there's always more to learn. But with these fundamentals, you can already solve real robotics development problems and build some amazing projects.
+
+**Most importantly: start using Docker for your next robot project!** The best way to learn is by doing.
+
+---
+
+## 📚 Quick Reference
+
+### Essential Commands
+```bash
+# Images
+docker pull image_name          # Download image
+docker images                   # List images
+docker rmi image_name           # Remove image
+
+# Containers  
+docker run -it image_name       # Run interactive container
+docker ps                       # List running containers
+docker ps -a                    # List all containers
+docker stop container_name      # Stop container
+docker rm container_name        # Remove container
+
+# File Sharing
+docker run -it -v host_path:container_path image_name
+
+# User Permissions
+docker run -it --user $(id -u):$(id -g) image_name
+
+# Cleanup
+docker system prune            # Remove unused items
+```
+
+### Docker File Basics
+```dockerfile
+FROM base_image               # Start from existing image
+RUN command                   # Run command during build
+COPY source dest              # Copy files into image
+```
+
+**Remember**: Every expert was once a beginner. Keep experimenting, and don't be afraid to break things - that's what containers are for!
+
+Happy containerizing! 🐳🤖
+            </script>
+            
+            <!-- The Markdown above will be rendered as HTML here -->
+            <noscript>
+                <div style="color: red; padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px;">
+                    <strong>JavaScript Required:</strong> Please enable JavaScript to view the tutorial content.
+                </div>
+            </noscript>
+            <div id="md-content"></div>
+        </div>
+
+        <!-- Tutorial Navigation -->
+        <div class="tutorial-nav">
+            <a href="../../tutorials/index.html" class="nav-button">
+                ← Back to Tutorials
+            </a>
+            <a href="../../tutorials/index.html" class="nav-button next-tutorial">
+                Next Tutorial →
+            </a>
+        </div>
+    </div>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script>
+    // Simple markdown rendering logic with Prism.js and robust fallback
+    document.addEventListener('DOMContentLoaded', function() {
+        const mdScript = document.getElementById('md-raw');
+        const mdContent = document.getElementById('md-content');
+        if (mdScript && mdContent && window.marked) {
+            // Use default marked renderer for headings (let marked handle IDs)
+            marked.setOptions({
+                gfm: true,
+                breaks: true,
+                smartLists: true,
+                smartypants: true
+            });
+            mdContent.innerHTML = marked.parse(mdScript.textContent.trim());
+            Prism.highlightAll();
+
+            // Helper: Normalize string for ID comparison
+            function normalizeId(str) {
+                return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            }
+
+            // Smooth scroll for TOC links (robust: match heading IDs even if special chars)
+            mdContent.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        let target = document.getElementById(href.slice(1));
+                        // If not found, try to find a heading with a similar normalized ID
+                        if (!target) {
+                          const allHeadings = mdContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                          for (const heading of allHeadings) {
+                            if (normalizeId(heading.textContent) === normalizeId(href.slice(1))) {
+                              target = heading;
+                              break;
+                            }
+                          }
+                        }
+                        if (target) {
+                            e.preventDefault();
+                            // Offset for sticky nav
+                            const nav = document.querySelector('nav');
+                            const navHeight = nav ? nav.offsetHeight : 0;
+                            const targetRect = target.getBoundingClientRect();
+                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                            const top = targetRect.top + scrollTop - navHeight - 10; // 10px extra offset
+                            window.scrollTo({ top, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        }
+    });
+    </script>
+</body>
+</html>

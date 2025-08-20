@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><!-- Tutorial Title Here --></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* Summer sea vibe gradient: multi-color */
+            background: linear-gradient(to bottom, 
+                #ffffff 0%,
+                #00F2FF 30%,
+                #00b8ff 40%,
+                #00719c 70%,
+                #00415a 100%
+            );
+            min-height: 100vh;
+        }
+        
+
+        /* Gradient animation matching main page */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Enhanced floating particles animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(26, 188, 156, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            animation: floatingParticles 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes floatingParticles {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg) scale(1.1);
+                opacity: 0.6;
+            }
+            66% {
+                transform: translateY(30px) rotate(240deg) scale(0.9);
+                opacity: 0.4;
+            }
+        }
+
+        /* Navigation matching main page style */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #007bff;
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Tutorial Container with modern styling */
+        .tutorial-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tutorial header styling */
+        .tutorial-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .tutorial-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-header h1 {
+            color: #222;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tutorial-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Default: fluorescent green-blue */
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,255,180,0.10);
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge.difficulty-beginner {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Fluorescent green-blue */
+            color: #003c2f;
+        }
+
+        .difficulty-badge.difficulty-intermediate {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Fluorescent yellow-orange */
+            color: #7a4f00;
+        }
+
+        .difficulty-badge.difficulty-advanced {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Fluorescent red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(2) {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Yellow-orange */
+            color: #7a4f00;
+        }
+
+        .tutorial-meta span:nth-child(3) {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(4) {
+            background: linear-gradient(90deg, #00eaff 0%, #00ffb0 100%); /* Blue-green */
+            color: #003c2f;
+        }
+
+        /* Content styling */
+        .tutorial-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .tutorial-content h1 {
+            color: #222;
+            font-size: 2.2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .tutorial-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-content h2 {
+            color: #007bff;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h3 {
+            color: #0056b3;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h4 {
+            color: #495057;
+            font-size: 1.2rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content p {
+            margin-bottom: 1.2rem;
+            color: #555;
+        }
+
+        .tutorial-content ul, .tutorial-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #555;
+        }
+
+        .tutorial-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .tutorial-content blockquote {
+            background: rgba(0, 123, 255, 0.05);
+            border-left: 4px solid #007bff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            color: #0056b3;
+            font-style: italic;
+            position: relative;
+        }
+
+        .tutorial-content blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: #007bff;
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Code blocks styling */
+        .tutorial-content pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tutorial-content code {
+            background: rgba(0, 123, 255, 0.08);
+            color: #0056b3;
+            border-radius: 4px;
+            padding: 0.2rem 0.4rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.98em;
+        }
+
+        .tutorial-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        /* Links styling */
+        .tutorial-content a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tutorial-content a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            transition: width 0.3s ease;
+        }
+
+        .tutorial-content a:hover::after {
+            width: 100%;
+        }
+
+        .tutorial-content a:hover {
+            color: #0056b3;
+        }
+
+        /* Images styling */
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tables styling */
+        .tutorial-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .tutorial-content th, .tutorial-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .tutorial-content th {
+            background: linear-gradient(45deg, #007bff, #00bcd4);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tutorial-content tr:hover {
+            background: rgba(0, 123, 255, 0.05);
+        }
+
+        /* CTA Button styling - clear orange with white text */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, #00d0ff 0%, #3cff53 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.15);
+            margin: 1rem 0;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(255,60,60,0.18);
+        }
+
+        .tutorial-content a.cta-button {
+            color: #fff !important;
+        }
+
+        /* Navigation buttons - keep style but more visible */
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7a4f00;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Navigation links - keep both buttons on one line, at both sides */
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 123, 255, 0.2);
+        }
+
+        /* Make the 'Next Tutorial' button green */
+        .nav-button.next-tutorial {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%);
+            color: #003c2f;
+        }
+
+        .nav-button.next-tutorial:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .tutorial-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .tutorial-header h1 {
+                font-size: 2rem;
+            }
+
+            .tutorial-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .tutorial-content h2 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .tutorial-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content pre {
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            body::before {
+                display: none;
+            }
+            
+            .tutorial-container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                background: white;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+
+        /* Prism.js overrides for better integration */
+        .tutorial-content pre[class*="language-"] {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem 1rem;
+            overflow-x: auto;
+        }
+    </style>
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../portfolio.html">Portfolio</a></li>
+            <li><a href="../tutorials/index.html" class="active">Tutorials</a></li>
+            <li><a href="../blog/index.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <div class="tutorial-container">
+        <!-- Tutorial Header -->
+        <div class="tutorial-header">
+            <h1>🌟Git for Complete Beginners</h1>
+            <div class="tutorial-meta">
+                <span class="difficulty-badge difficulty-beginner">Beginner<!-- Beginner | Intermediate | Advanced --></span>
+                <span>⏱️ 30 min<!-- Duration (e.g., 2-3 hours) --></span>
+                <span>📅 August 2025<!-- Date (e.g., January 2025) --></span>
+                <span>🏷️ Git<!-- Tags (e.g., ROS 2, Python, Robotics) --></span>
+            </div>
+        </div>
+
+        <!-- Tutorial Content -->
+        <div class="tutorial-content">
+            <!--
+                HOW TO USE THIS TEMPLATE (Markdown):
+                ===================================
+                
+                1. Write your tutorial content between the <script type="text/markdown" id="md-raw"> tags below.
+                2. Do NOT indent your Markdown content. Start each line at the very beginning (no spaces or tabs).
+                3. Indented lines will render as code blocks!
+                
+                Example (correct):
+                <script type="text/markdown" id="md-raw">
+# My Tutorial Title
+Welcome!
+- List item
+</script>
+                
+                Example (incorrect):
+                <script type="text/markdown" id="md-raw">
+    # My Tutorial Title
+    Welcome!
+    - List item
+</script>
+                
+                Supported Markdown: # ## ###, **bold**, *italic*, [links](url), ![img](url), code blocks, lists, blockquotes, tables, ---
+            -->
+            
+            <script type="text/markdown" id="md-raw">
+
+# 🖥️ Installing Git on Windows
+
+Git was originally designed for Unix-based systems (like Linux and macOS).  
+On Windows, we need to install **Git Bash**, which gives us both Git **and** a Unix-like terminal environment.
+
+---
+
+## 1️⃣ Download the Git Installer
+1. Open your browser and go to: [https://git-scm.com](https://git-scm.com)  
+2. Click **Download** and choose the version for your system (most modern PCs use 64-bit).
+3. Once downloaded, open the installer.
+
+---
+
+## 2️⃣ Start Installation
+1. When prompted by Windows **"Allow this app to make changes"**, click **Yes**.
+2. Click **Next** on the license agreement.
+3. Keep the default installation location (usually `C:\Program Files\Git`) and click **Next**.
+4. Leave all default components checked, click **Next**.
+
+---
+
+## 3️⃣ Choose the Default Editor
+1. **Recommended**: Change the editor from **Vim** (default) to **Visual Studio Code**.  
+   - If you don’t have VS Code installed, download it from: [https://code.visualstudio.com](https://code.visualstudio.com)  
+   - During VS Code installation, check:
+     - ✅ **Add to PATH**  
+     - ✅ **Register code as an editor for supported file types**
+2. Once VS Code is installed, return to the Git installer and select **Use Visual Studio Code as Git's default editor**.
+3. Click **Next**.
+
+---
+
+## 4️⃣ Default Branch Name
+- Select **"Let Git decide"** (default) for now.  
+  *(You can change it later to `main` if desired.)*  
+- Click **Next**.
+
+---
+
+## 5️⃣ Adjust Line Ending Conversions
+- Choose **Checkout Windows-style, commit Unix-style line endings** (default).  
+- Click **Next**.
+
+---
+
+## 6️⃣ Choose Terminal Emulator
+- Select **Use MinTTY (the default terminal)**.  
+- Click **Next**.
+
+---
+
+## 7️⃣ Configure Extra Options
+- Keep defaults:
+  - ✅ **Enable Git Credential Manager Core**
+  - ✅ **Enable file system caching**
+- Click **Next**, then **Install**.
+
+---
+
+## 8️⃣ Finish Installation
+1. When the installation completes, check **Launch Git Bash**.
+2. Click **Finish**.
+
+---
+
+## 9️⃣ Verify Installation
+Open **Git Bash** and run:
+```bash
+git --version
+
+            </script>
+            
+            <!-- The Markdown above will be rendered as HTML here -->
+            <noscript>
+                <div style="color: red; padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px;">
+                    <strong>JavaScript Required:</strong> Please enable JavaScript to view the tutorial content.
+                </div>
+            </noscript>
+            <div id="md-content"></div>
+        </div>
+
+        <!-- Tutorial Navigation -->
+        <div class="tutorial-nav">
+            <a href="../tutorials/index.html" class="nav-button">
+                ← Back to Tutorials
+            </a>
+            <a href="tutorial_template.html" class="nav-button next-tutorial">
+                Next Tutorial →
+            </a>
+        </div>
+    </div>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script>
+    // Simple markdown rendering logic with Prism.js and robust fallback
+    document.addEventListener('DOMContentLoaded', function() {
+        const mdScript = document.getElementById('md-raw');
+        const mdContent = document.getElementById('md-content');
+        if (mdScript && mdContent && window.marked) {
+            // Use default marked renderer for headings (let marked handle IDs)
+            marked.setOptions({
+                gfm: true,
+                breaks: true,
+                smartLists: true,
+                smartypants: true
+            });
+            mdContent.innerHTML = marked.parse(mdScript.textContent.trim());
+            Prism.highlightAll();
+
+            // Helper: Normalize string for ID comparison
+            function normalizeId(str) {
+                return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            }
+
+            // Smooth scroll for TOC links (robust: match heading IDs even if special chars)
+            mdContent.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        let target = document.getElementById(href.slice(1));
+                        // If not found, try to find a heading with a similar normalized ID
+                        if (!target) {
+                          const allHeadings = mdContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                          for (const heading of allHeadings) {
+                            if (normalizeId(heading.textContent) === normalizeId(href.slice(1))) {
+                              target = heading;
+                              break;
+                            }
+                          }
+                        }
+                        if (target) {
+                            e.preventDefault();
+                            // Offset for sticky nav
+                            const nav = document.querySelector('nav');
+                            const navHeight = nav ? nav.offsetHeight : 0;
+                            const targetRect = target.getBoundingClientRect();
+                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                            const top = targetRect.top + scrollTop - navHeight - 10; // 10px extra offset
+                            window.scrollTo({ top, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        }
+    });
+    </script>
+</body>
+</html>
