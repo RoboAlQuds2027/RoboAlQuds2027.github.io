@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><!-- Tutorial Title Here --></title>
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 240px;
+            background: rgba(255,255,255,0.97);
+            box-shadow: 2px 0 24px rgba(0,0,0,0.08);
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+            overflow-y: auto;
+            padding-top: 60px;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1.5rem 1.5rem 1rem 1.5rem;
+            color: #007bff;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0 1.5rem;
+        }
+        .sidebar ul li {
+            margin-bottom: 1rem;
+        }
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: block;
+            transition: background 0.2s, color 0.2s;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background: #e3f2fd;
+            color: #007bff;
+        }
+        .sidebar-toggle {
+            position: fixed;
+            top: 8px;
+            left: 20px;
+            z-index: 300;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover {
+            background: #005fa3;
+        }
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 80vw;
+                min-width: 180px;
+            }
+        }
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.18);
+            z-index: 199;
+        }
+        .sidebar.open ~ .sidebar-backdrop {
+            display: block;
+        }
+        /* Push content when sidebar open */
+        .sidebar.open ~ .main-content {
+            margin-left: 240px;
+            transition: margin-left 0.3s cubic-bezier(.4,2,.6,1);
+        }
+        @media (max-width: 700px) {
+            .sidebar.open ~ .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* Summer sea vibe gradient: multi-color */
+            background: linear-gradient(to bottom, 
+                #ffffff 0%,
+                #00F2FF 30%,
+                #00b8ff 40%,
+                #00719c 70%,
+                #00415a 100%
+            );
+            min-height: 100vh;
+        }
+        
+
+        /* Gradient animation matching main page */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Enhanced floating particles animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(26, 188, 156, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            animation: floatingParticles 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes floatingParticles {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg) scale(1.1);
+                opacity: 0.6;
+            }
+            66% {
+                transform: translateY(30px) rotate(240deg) scale(0.9);
+                opacity: 0.4;
+            }
+        }
+
+        /* Navigation matching main page style */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #007bff;
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Tutorial Container with modern styling */
+        .tutorial-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tutorial header styling */
+        .tutorial-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .tutorial-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-header h1 {
+            color: #222;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tutorial-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Default: fluorescent green-blue */
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,255,180,0.10);
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-badge.difficulty-beginner {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%); /* Fluorescent green-blue */
+            color: #003c2f;
+        }
+
+        .difficulty-badge.difficulty-intermediate {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Fluorescent yellow-orange */
+            color: #7a4f00;
+        }
+
+        .difficulty-badge.difficulty-advanced {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Fluorescent red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(2) {
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%); /* Yellow-orange */
+            color: #7a4f00;
+        }
+
+        .tutorial-meta span:nth-child(3) {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%); /* Red-orange */
+            color: #fff;
+        }
+
+        .tutorial-meta span:nth-child(4) {
+            background: linear-gradient(90deg, #00eaff 0%, #00ffb0 100%); /* Blue-green */
+            color: #003c2f;
+        }
+
+        /* Content styling */
+        .tutorial-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .tutorial-content h1 {
+            color: #222;
+            font-size: 2.2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .tutorial-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border-radius: 2px;
+        }
+
+        .tutorial-content h2 {
+            color: #007bff;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h3 {
+            color: #0056b3;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content h4 {
+            color: #495057;
+            font-size: 1.2rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .tutorial-content p {
+            margin-bottom: 1.2rem;
+            color: #555;
+        }
+
+        .tutorial-content ul, .tutorial-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #555;
+        }
+
+        .tutorial-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .tutorial-content blockquote {
+            background: rgba(0, 123, 255, 0.05);
+            border-left: 4px solid #007bff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            color: #0056b3;
+            font-style: italic;
+            position: relative;
+        }
+
+        .tutorial-content blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: #007bff;
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Code blocks styling */
+        .tutorial-content pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tutorial-content code {
+            background: rgba(0, 123, 255, 0.08);
+            color: #0056b3;
+            border-radius: 4px;
+            padding: 0.2rem 0.4rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.98em;
+        }
+
+        .tutorial-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        /* Links styling */
+        .tutorial-content a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tutorial-content a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            transition: width 0.3s ease;
+        }
+
+        .tutorial-content a:hover::after {
+            width: 100%;
+        }
+
+        .tutorial-content a:hover {
+            color: #0056b3;
+        }
+
+        /* Images styling */
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tables styling */
+        .tutorial-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .tutorial-content th, .tutorial-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .tutorial-content th {
+            background: linear-gradient(45deg, #007bff, #00bcd4);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tutorial-content tr:hover {
+            background: rgba(0, 123, 255, 0.05);
+        }
+
+        /* CTA Button styling - clear orange with white text */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, #00d0ff 0%, #3cff53 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.15);
+            margin: 1rem 0;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(90deg, #ff3c3c 0%, #ff9800 100%);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(255,60,60,0.18);
+        }
+
+        .tutorial-content a.cta-button {
+            color: #fff !important;
+        }
+
+        /* Navigation buttons - keep style but more visible */
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7a4f00;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #fff700 0%, #ffb300 100%);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Navigation links - keep both buttons on one line, at both sides */
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 123, 255, 0.2);
+        }
+
+        /* Make the 'Next Tutorial' button green */
+        .nav-button.next-tutorial {
+            background: linear-gradient(90deg, #00ffb0 0%, #00eaff 100%);
+            color: #003c2f;
+        }
+
+        .nav-button.next-tutorial:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ff3c3c 100%);
+            color: #fff;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .tutorial-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .tutorial-header h1 {
+                font-size: 2rem;
+            }
+
+            .tutorial-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .tutorial-content h2 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .tutorial-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tutorial-content pre {
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            body::before {
+                display: none;
+            }
+            
+            .tutorial-container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                background: white;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+
+        /* Prism.js overrides for better integration */
+        .tutorial-content pre[class*="language-"] {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem 1rem;
+            overflow-x: auto;
+        }
+    </style>
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Show chapters" aria-label="Show chapters">☰</button>
+    <nav>
+        <ul>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../../portfolio.html">Portfolio</a></li>
+            <li><a href="../index.html" class="active">Tutorials</a></li>
+            <li><a href="../../blog/index.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidebar" id="sidebarNav">
+        <h2>Chapters</h2>
+        <ul>
+            <li><a href="#introduction-the-problem-we're-solving">Introduction: The Problem We're Solving</a></li>## Introduction: The Problem We're Solving
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#understanding-the-challenge">Understanding the Challenge</a></li>
+            <li><a href="#docker-networking-basics">Docker Networking Basics</a></li>
+            <li><a href="#method-1-manual-docker-network-setup">Method 1: Manual Docker Network Setup</a></li>
+            <li><a href="#method-2-docker-compose-recommended">Method 2: Docker Compose (Recommended)</a></li>
+            <li><a href="#step-by-step-complete-example">Step-by-Step Complete Example</a></li>
+            <li><a href="#testing-your-setup">Testing Your Setup</a></li>
+            <li><a href="#common-problems-and-solutions">Common Problems and Solutions</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#next-steps">Next Steps</a></li>
+        </ul>
+    </div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="main-content">
+    <div class="tutorial-container">
+        <!-- Tutorial Header -->
+        <div class="tutorial-header">
+            <h1>🌟Docker for Complete Beginners (Robotics)</h1>
+            <div class="tutorial-meta">
+                <span class="difficulty-badge difficulty-beginner">Intermediate<!-- Beginner | Intermediate | Advanced --></span>
+                <span>⏱️ 1.5 hours<!-- Duration (e.g., 2-3 hours) --></span>
+                <span>📅 August 2025<!-- Date (e.g., January 2025) --></span>
+                <span>🏷️ Docker<!-- Tags (e.g., ROS 2, Python, Robotics) --></span>
+            </div>
+        </div>
+
+        <!-- Tutorial Content -->
+        <div class="tutorial-content">
+            <!--
+                HOW TO USE THIS TEMPLATE (Markdown):
+                ===================================
+                
+                1. Write your tutorial content between the <script type="text/markdown" id="md-raw"> tags below.
+                2. Do NOT indent your Markdown content. Start each line at the very beginning (no spaces or tabs).
+                3. Indented lines will render as code blocks!
+                
+                Example (correct):
+                <script type="text/markdown" id="md-raw">
+# My Tutorial Title
+Welcome!
+- List item
+</script>
+                
+                Example (incorrect):
+                <script type="text/markdown" id="md-raw">
+    # My Tutorial Title
+    Welcome!
+    - List item
+</script>
+                
+                Supported Markdown: # ## ###, **bold**, *italic*, [links](url), ![img](url), code blocks, lists, blockquotes, tables, ---
+            -->
+            
+            <script type="text/markdown" id="md-raw">
+
+# Complete Guide: ROS2 Node Communication Between Docker Containers
+
+## Table of Contents
+1. [Introduction: The Problem We're Solving](#introduction-the-problem-were-solving)
+2. [Prerequisites](#prerequisites)
+3. [Understanding Docker Networking (Simple Explanation)](#understanding-docker-networking-simple-explanation)
+4. [Understanding the Challenge](#understanding-the-challenge)
+5. [Quick Start: Using Demo Nodes (Recommended First)](#quick-start-using-demo-nodes-recommended-first)
+6. [Testing Your Demo Setup](#testing-your-demo-setup)
+7. [Building Your Own Custom Nodes](#building-your-own-custom-nodes)
+8. [Saving Your Work: Creating Images from Containers](#saving-your-work-creating-images-from-containers)
+9. [Common Problems and Solutions](#common-problems-and-solutions)
+10. [Best Practices](#best-practices)
+11. [Next Steps](#next-steps)
+
+---
+
+## Introduction: The Problem We're Solving
+
+**What we want to achieve:** Two ROS2 nodes talking to each other, but each node running in its own Docker container.
+
+**Why this matters:** In real robotics projects, you might want to:
+- Run different parts of your system in isolation
+- Use different ROS2 versions for different components
+- Deploy to different machines easily
+- Keep your development environment clean
+
+**Learning approach:**
+1. 🚀 **Quick Start**: Use existing ROS2 demo nodes to understand the concept
+2. 🔧 **Build Custom**: Create your own nodes after understanding the basics
+3. 💾 **Save Work**: Learn to create reusable Docker images
+
+---
+
+## Prerequisites
+
+**You should know:**
+- ✅ Basic ROS2 concepts (nodes, topics, publishers, subscribers)
+- ✅ How to run `ros2 run` commands
+- ✅ Basic terminal/command line usage
+
+**You should have installed:**
+- Docker Desktop (Windows/Mac) or Docker Engine (Linux)
+- Basic text editor (VS Code, nano, vim, etc.)
+
+**Quick Docker check:**
+```bash
+# Test if Docker is working
+docker --version
+docker run hello-world
+```
+
+---
+
+## Understanding Docker Networking (Simple Explanation)
+
+### What is Networking?
+Think of networking like **mail delivery in a city**:
+- Each house (container) has an address
+- Mail trucks (data) need to know how to find houses
+- Houses on different streets (networks) can't normally send mail to each other
+
+### Docker Networking Basics
+
+#### Default Docker Behavior
+```
+🌐 Your Computer
+├── 📦 Container 1 (Publisher)    - Address: 172.17.0.2
+└── 📦 Container 2 (Subscriber)   - Address: 172.17.0.3
+❌ Problem: They get random addresses and can't find each other!
+```
+
+#### With Custom Docker Network
+```
+🌐 Your Computer
+└── 🏘️ ros_network (Our Custom Network)
+    ├── 📦 Container 1 (Publisher)    - Name: "publisher"
+    └── 📦 Container 2 (Subscriber)   - Name: "subscriber"
+✅ Solution: They can find each other by name!
+```
+
+### Key Docker Network Concepts
+
+1. **Bridge Network**: Like a local neighborhood - containers can talk to each other
+2. **Container Names**: Like house names - "publisher" can send messages to "subscriber"
+3. **Network Isolation**: Containers on different networks can't see each other
+4. **Port Mapping**: Like forwarding mail from your mailbox to your door
+
+### Docker Network Commands You'll Use
+```bash
+# Create a network (like building a new neighborhood)
+docker network create my_network
+
+# List all networks (see all neighborhoods)
+docker network ls
+
+# See which containers are in a network
+docker network inspect my_network
+
+# Remove a network (demolish neighborhood)
+docker network rm my_network
+```
+
+### Why ROS2 Needs This
+ROS2 uses something called **DDS (Data Distribution Service)**:
+- It automatically discovers other ROS2 nodes on the network
+- Like nodes shouting "Hello! I'm here!" and listening for others
+- If containers can't see each other's network, they can't hear these shouts
+- **ROS_DOMAIN_ID**: Like a radio frequency - all nodes must use the same frequency to talk
+
+---
+
+## Understanding the Challenge
+
+### Why Can't Containers Talk by Default?
+
+**The Problem:**
+```bash
+# Terminal 1 - Publisher container
+docker run -it ros:humble bash
+ros2 run demo_nodes_cpp talker
+
+# Terminal 2 - Subscriber container  
+docker run -it ros:humble bash
+ros2 run demo_nodes_cpp listener
+# ❌ Subscriber won't hear anything!
+```
+
+**Why it doesn't work:**
+- Each container is on a separate network
+- ROS2 can't discover nodes across different networks
+- It's like two people in soundproof rooms trying to talk
+
+**The Solution Preview:**
+```bash
+# Create shared network
+docker network create ros_net
+
+# Both containers use the same network
+docker run -it --network ros_net ros:humble bash  # Publisher
+docker run -it --network ros_net ros:humble bash  # Subscriber
+# ✅ Now they can communicate!
+```
+
+---
+
+## Quick Start: Using Demo Nodes (Recommended First)
+
+Let's start with ROS2's built-in demo nodes to understand the concept before building our own.
+
+### Method 1: Manual Setup (Learn the Basics)
+
+#### Step 1: Create the Network
+```bash
+# Create a custom network for our ROS containers
+docker network create ros_demo_network
+
+# Verify it was created
+docker network ls
+# You should see 'ros_demo_network' in the list
+```
+
+#### Step 2: Start Publisher Container
+```bash
+# Terminal 1 - Run publisher container
+docker run -it \
+  --network ros_demo_network \
+  --name demo_publisher \
+  -e ROS_DOMAIN_ID=42 \
+  ros:humble bash
+```
+
+**Inside the publisher container:**
+```bash
+# Install demo nodes if not already present
+apt update
+apt install -y ros-humble-demo-nodes-cpp ros-humble-demo-nodes-py
+
+# Run the demo talker (publisher)
+ros2 run demo_nodes_cpp talker
+
+# You should see:
+# [INFO] [1234567890.123456789] [talker]: Publishing: "Hello World: 1"
+# [INFO] [1234567890.123456789] [talker]: Publishing: "Hello World: 2"
+```
+
+#### Step 3: Start Subscriber Container
+```bash
+# Install demo nodes if not already present
+apt update
+apt install -y ros-humble-demo-nodes-cpp ros-humble-demo-nodes-py
+
+# Terminal 2 - Run subscriber container
+docker run -it \
+  --network ros_demo_network \
+  --name demo_subscriber \
+  -e ROS_DOMAIN_ID=42 \
+  ros:humble bash
+```
+
+**Inside the subscriber container:**
+```bash
+# Run the demo listener (subscriber)
+ros2 run demo_nodes_cpp listener
+
+# You should see:
+# [INFO] [1234567890.123456789] [listener]: I heard: [Hello World: 1]
+# [INFO] [1234567890.123456789] [listener]: I heard: [Hello World: 2]
+```
+
+🎉 **Success!** If you see the subscriber receiving messages, Docker networking is working!
+
+### Method 2: Docker Compose (Automated Setup)
+
+Create a simple `docker-compose.yml` file:
+
+```yaml
+version: '3.8'
+
+services:
+  # Publisher using demo nodes
+  publisher:
+    image: ros:humble
+    container_name: demo_publisher
+    command: ros2 run demo_nodes_cpp talker
+    networks:
+      - ros_network
+    environment:
+      - ROS_DOMAIN_ID=42
+    stdin_open: true
+    tty: true
+
+  # Subscriber using demo nodes
+  subscriber:
+    image: ros:humble  
+    container_name: demo_subscriber
+    command: ros2 run demo_nodes_cpp listener
+    networks:
+      - ros_network
+    environment:
+      - ROS_DOMAIN_ID=42
+    depends_on:
+      - publisher
+    stdin_open: true
+    tty: true
+
+networks:
+  ros_network:
+    driver: bridge
+```
+
+**Run the demo:**
+```bash
+# Start both containers
+docker-compose up
+
+# You should see both publisher and subscriber logs
+# Publisher: Publishing: "Hello World: X"
+# Subscriber: I heard: [Hello World: X]
+```
+
+**Stop the demo:**
+```bash
+# Press Ctrl+C, then:
+docker-compose down
+```
+
+---
+
+## Testing Your Demo Setup
+
+### Test 1: Verify Network Connection
+```bash
+# Check if containers can ping each other
+docker exec demo_subscriber ping demo_publisher
+# Should show successful ping responses
+```
+
+### Test 2: ROS2 Node Discovery
+```bash
+# Enter subscriber container
+docker exec -it demo_subscriber bash
+
+# List all ROS2 nodes
+ros2 node list
+# Should show: /talker and /listener
+
+# List all topics
+ros2 topic list  
+# Should show: /chatter (among others)
+
+# Manually listen to the topic
+ros2 topic echo /chatter
+```
+
+### Test 3: Network Inspection
+```bash
+# See network details
+docker network inspect ros_demo_network
+
+# Should show both containers connected
+```
+
+---
+
+## Building Your Own Custom Nodes
+
+Now that you understand how Docker networking works with the demo nodes, let's create custom nodes.
+
+### Project Structure
+```
+ros2_custom_example/
+├── docker-compose.yml
+├── Dockerfile
+└── src/
+    └── my_package/
+        ├── package.xml
+        ├── setup.py
+        ├── resource/my_package
+        └── my_package/
+            ├── __init__.py
+            ├── temperature_publisher.py
+            └── temperature_subscriber.py
+```
+
+### Step 1: Create Project Directory
+```bash
+mkdir -p ros2_custom_example/src/my_package/my_package
+cd ros2_custom_example
+```
+
+### Step 2: Create Simple ROS2 Package Files
+
+**src/my_package/package.xml:**
+```xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>my_package</name>
+  <version>0.0.0</version>
+  <description>My custom ROS2 package</description>
+  <maintainer email="student@example.com">Student</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
+```
+
+**src/my_package/setup.py:**
+```python
+from setuptools import setup
+
+package_name = 'my_package'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='student',
+    maintainer_email='student@example.com',
+    description='My custom package',
+    license='Apache-2.0',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'temp_publisher = my_package.temperature_publisher:main',
+            'temp_subscriber = my_package.temperature_subscriber:main',
+        ],
+    },
+)
+```
+
+**Create empty files:**
+```bash
+touch src/my_package/resource/my_package
+touch src/my_package/my_package/__init__.py
+```
+
+### Step 3: Create Simple Custom Nodes
+
+**src/my_package/my_package/temperature_publisher.py:**
+```python
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32
+import random
+import socket
+
+class TemperaturePublisher(Node):
+    def __init__(self):
+        super().__init__('temperature_publisher')
+        
+        # Create publisher
+        self.publisher = self.create_publisher(Float32, 'temperature', 10)
+        
+        # Create timer (publish every 2 seconds)
+        self.timer = self.create_timer(2.0, self.publish_temperature)
+        
+        # Get container info
+        self.container_name = socket.gethostname()
+        
+        self.get_logger().info(f'Temperature Publisher started in container: {self.container_name}')
+
+    def publish_temperature(self):
+        # Simulate temperature reading (20-30 degrees)
+        temperature = 20.0 + random.random() * 10.0
+        
+        msg = Float32()
+        msg.data = temperature
+        
+        self.publisher.publish(msg)
+        self.get_logger().info(f'[{self.container_name}] Published temperature: {temperature:.2f}°C')
+
+def main(args=None):
+    rclpy.init(args=args)
+    
+    publisher = TemperaturePublisher()
+    
+    try:
+        rclpy.spin(publisher)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        publisher.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+**src/my_package/my_package/temperature_subscriber.py:**
+```python
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32
+import socket
+
+class TemperatureSubscriber(Node):
+    def __init__(self):
+        super().__init__('temperature_subscriber')
+        
+        # Create subscriber
+        self.subscription = self.create_subscription(
+            Float32,
+            'temperature',
+            self.temperature_callback,
+            10
+        )
+        
+        # Get container info
+        self.container_name = socket.gethostname()
+        
+        self.get_logger().info(f'Temperature Subscriber started in container: {self.container_name}')
+        self.get_logger().info('Waiting for temperature data...')
+
+    def temperature_callback(self, msg):
+        temperature = msg.data
+        
+        # Simple temperature analysis
+        if temperature > 25.0:
+            status = "HOT 🔥"
+        elif temperature < 22.0:
+            status = "COLD ❄️"
+        else:
+            status = "OK ✅"
+            
+        self.get_logger().info(f'[{self.container_name}] Received: {temperature:.2f}°C - Status: {status}')
+
+def main(args=None):
+    rclpy.init(args=args)
+    
+    subscriber = TemperatureSubscriber()
+    
+    try:
+        rclpy.spin(subscriber)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        subscriber.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+### Step 4: Create Dockerfile
+
+**Dockerfile:**
+```dockerfile
+# Use ROS2 Humble as base
+FROM ros:humble
+
+# Install any additional dependencies
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create workspace
+WORKDIR /workspace
+
+# Copy source code
+COPY src/ /workspace/src/
+
+# Build the package
+RUN . /opt/ros/humble/setup.bash && \
+    colcon build --packages-select my_package
+
+# Source setup files
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
+    echo "source /workspace/install/setup.bash" >> ~/.bashrc
+
+WORKDIR /workspace
+```
+
+### Step 5: Create Docker Compose for Custom Nodes
+
+**docker-compose.yml:**
+```bash
+version: '3.8'  # ✅ Docker Compose file format version.
+                # This tells Docker Compose which syntax/features are supported.
+
+# 🚨 You can either use your **custom-built image** from your Dockerfile
+#     OR use the **official ROS 2 image** from DockerHub ⚠️
+#
+# 👉 To use your Dockerfile (custom image):
+#       build: .        # 📦 Build the image from the Dockerfile in the current directory
+#
+# 👉 To use the official ROS image:
+#       image: ros:humble   # 🐳 Pulls ROS Humble base image directly from DockerHub
+#
+# ❗ Do NOT keep both (build & image) at the same time — choose one.
+
+services:    🧩 Here we define our containers (ROS 2 nodes).
+  
+  
+  # 🚀 Publisher (container has publisher node built from Dockerfile)
+  my_publisher:
+
+
+#   build: .   # 📦 Build the Docker image using the Dockerfile in the current directory.
+    image: ros:humble   # No build, pull from DockerHub
+    
+    container_name: my_publisher  # 🏷️ Name of the container (so it’s easier to manage).
+    command: >  # 🖥️ What the container runs by default.
+      bash -c "source /opt/ros/humble/setup.bash &&
+               ros2 run demo_nodes_cpp talker"
+               # 👉 Explanation:
+                 # 1) Load ROS 2 environment (/opt/ros/humble)
+                 # 2) Run your publisher node
+    networks:
+      - ros_network # 🌐 Attach this container to the custom ROS network.
+    environment:
+      - ROS_DOMAIN_ID=42 # 🔑 ROS 2 nodes discover each other if they share the same domain ID.
+    volumes:
+      - ./shared_folder:/workspace/shared_folder   
+        # 📂 Mounts a folder from host -> container
+        # (so both publisher & subscriber can exchange logs/files/data).
+        # 🚨 you have to create this folder manually first.
+
+
+  # 📡 Subscriber ((container has subscriber node built from Dockerfile))
+  my_subscriber:
+
+
+#   build: .   # 📦 Build the Docker image using the Dockerfile in the current directory.
+    image: ros:humble   # No build, pull from DockerHub    
+    
+    container_name: my_subscriber
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+               ros2 run demo_nodes_cpp listener"
+    networks:
+      - ros_network
+    environment:
+      - ROS_DOMAIN_ID=42
+    depends_on:
+      - my_publisher #⚡Ensures publisher starts before subscriber (avoids startup race conditions).
+    volumes:
+      - ./shared_folder:/workspace/shared_folder   
+        # 📂 Same shared folder as publisher (for data exchange).
+
+# 🌐 Shared virtual network
+networks:
+  ros_network:
+    driver: bridge
+```
+
+#### 📝 Big Picture Recap
+
+- **services:**  
+  Each service = one **ROS 2 node** running in its own container.  
+
+- **build:**  
+  They share the same **base image** (from your Dockerfile).  
+
+- **command:**  
+  Each container runs a different **node** (publisher or subscriber).  
+
+- **ROS_DOMAIN_ID:**  
+  🔑 Crucial for ROS 2 DDS communication. If they mismatch, nodes won’t see each other.  
+
+- **volumes:**  
+  Optional, but useful for **exchanging files/logs** between containers and your host PC.  
+
+- **depends_on:**  
+  Ensures proper **launch order** (subscriber won’t run before publisher).  
+
+- **networks:**  
+  Both services live on the same **virtual network** (`ros_network`), enabling communication.  
+
+
+
+### Step 6: Run Your Custom System
+
+```bash
+# Build and run
+docker-compose up --build
+
+# Expected output:
+# [INFO] [1703698230.234567890] [listener]: I heard: [Hello World: 0]
+# [INFO] [1703698231.234567890] [listener]: I heard: [Hello World: 1]
+```
+
+---
+## Saving Your Container Work as Docker Image
+
+### The Problem
+You've been working inside a Docker container for hours:
+- Installed packages
+- Wrote code 
+- Configured settings
+- Set up your development environment
+
+Now you want to **save all that work** so you (or your friends) can use it later without redoing everything!
+
+### The Solution: `docker commit`
+
+### Step 1: Do Your Work in a Container
+
+**⚠️ CRITICAL: Always name your container!**
+
+```bash
+# ✅ CORRECT: Start container with a name
+docker run -it --name my_workspace ros:humble bash
+
+# ❌ WRONG: No name - you'll have trouble later!
+docker run -it ros:humble bash
+```
+
+**Why naming matters:** Without a name, Docker assigns random names like `angry_tesla` or `silly_newton`. You'll need this name to save your work!
+
+**Inside the container, do your work:**
+
+```bash
+# You should see a prompt like: root@abc123:/# 
+# This means you're INSIDE the container
+
+# Install packages
+apt-get update && apt-get install -y vim git htop
+pip3 install numpy matplotlib opencv-python
+
+# Write some code
+mkdir -p /workspace/src/my_package
+echo "#!/usr/bin/env python3" > /workspace/src/my_package/my_node.py
+echo "print('Hello from my saved container!')" >> /workspace/src/my_package/my_node.py
+
+# Set up your environment
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+echo "export MY_CUSTOM_VAR=development" >> ~/.bashrc
+
+# Create a marker file to prove it worked
+echo "Container setup completed on $(date)" > /workspace/setup_complete.txt
+```
+
+**🚨 COMMON MISTAKE #1: Running docker commit from inside the container**
+
+### Step 2: Save Your Container as an Image
+
+**⚠️ IMPORTANT: Open a NEW terminal window/tab**
+
+**❌ WRONG - Running from inside container:**
+```bash
+root@abc123:/workspace# docker commit my_workspace my_saved_work:v1.0
+# This will give you an error like:
+# Cannot connect to the Docker daemon at unix:///var/run/docker.sock
+```
+
+**✅ CORRECT - Run from your HOST machine (new terminal):**
+
+```bash
+# On your host machine (NOT inside container)
+# Your prompt should look like: user@your-laptop:~$
+
+# Save the container as a new image
+docker commit my_workspace my_saved_work:v1.0
+```
+
+**How to know you're in the right place:**
+- ✅ Host machine prompt: `user@laptop:~$` or `C:\Users\YourName>`
+- ❌ Container prompt: `root@abc123:/workspace#`
+
+**🚨 COMMON MISTAKE #2: Container not running**
+
+If you get this error:
+```bash
+Error response from daemon: No such container: my_workspace
+```
+
+**Check if your container is running:**
+```bash
+# List running containers
+docker ps
+
+# List ALL containers (including stopped)
+docker ps -a
+```
+
+**If container is stopped, restart it:**
+```bash
+# Start the stopped container
+docker start my_workspace
+
+# Then commit it
+docker commit my_workspace my_saved_work:v1.0
+```
+
+### Step 3: Test Your Saved Image
+
+**🚨 COMMON MISTAKE #3: Testing in the same container**
+
+**❌ WRONG:**
+```bash
+# Still in your original container - this doesn't prove anything!
+root@abc123:/workspace# ls /workspace/
+```
+
+**✅ CORRECT - Exit and start fresh:**
+```bash
+# First, exit your original container
+exit
+
+# Start a NEW container from your saved image
+docker run -it my_saved_work:v1.0 bash
+
+# Now check if your work is there
+ls /workspace/
+cat /workspace/setup_complete.txt
+python3 /workspace/src/my_package/my_node.py
+```
+
+**Success signs:**
+- You see your `/workspace/` folder
+- Your setup_complete.txt file exists
+- Your Python script runs
+
+## sharing With Friends
+
+### Method 1: Save to File (Easy Sharing)
+
+**🚨 COMMON MISTAKE #4: Running from wrong directory**
+
+```bash
+# Check where you are first
+pwd
+
+# ❌ WRONG: Saving in system directories
+cd /usr/bin
+docker save -o my_saved_work.tar my_saved_work:v1.0
+# Permission denied!
+
+# ✅ CORRECT: Save in your home directory or project folder
+cd ~/Desktop  # or wherever you want the file
+docker save -o my_saved_work.tar my_saved_work:v1.0
+
+# Check the file was created
+ls -lh my_saved_work.tar
+# You should see something like: -rw-r--r-- 1 user user 1.2G Dec 15 10:30 my_saved_work.tar
+```
+
+**File sharing options:**
+- USB drive (if file is small enough)
+- Cloud storage (Google Drive, Dropbox, OneDrive)
+- File transfer tools (WeTransfer, etc.)
+
+**Your friend receives the file:**
+
+**🚨 COMMON MISTAKE #5: Friend loads in wrong directory**
+
+```bash
+# ❌ WRONG: Your friend tries to load from random location
+docker load -i my_saved_work.tar
+# No such file or directory
+
+# ✅ CORRECT: Navigate to where the file is first
+cd ~/Downloads  # or wherever they saved it
+ls -la my_saved_work.tar  # Confirm file exists
+docker load -i my_saved_work.tar
+
+# Success message should appear:
+# Loaded image: my_saved_work:v1.0
+
+# Now they can use your setup!
+docker run -it my_saved_work:v1.0 bash
+```
+
+### Method 2: Push to Docker Hub (Online Sharing)
+
+**Create account at hub.docker.com first!**
+
+**🚨 COMMON MISTAKE #6: Wrong username in tag**
+
+```bash
+# Login first
+docker login
+# Enter your Docker Hub username and password
+
+# ❌ WRONG: Using wrong username
+docker tag my_saved_work:v1.0 someoneelse/my_saved_work:v1.0
+docker push someoneelse/my_saved_work:v1.0
+# Access denied!
+
+# ✅ CORRECT: Use YOUR Docker Hub username
+docker tag my_saved_work:v1.0 youractualusername/my_saved_work:v1.0
+docker push youractualusername/my_saved_work:v1.0
+```
+
+**Your friends can now get it:**
+```bash
+# Anyone can pull and use your image
+docker pull youractualusername/my_saved_work:v1.0
+docker run -it youractualusername/my_saved_work:v1.0 bash
+```
+
+## Troubleshooting Common Issues
+
+### Issue 1: "Cannot connect to Docker daemon"
+**Problem:** Running Docker commands from inside container
+**Solution:** Open new terminal, run commands from host machine
+
+### Issue 2: "No such container"
+**Problem:** Container name is wrong or container stopped
+**Solution:** 
+```bash
+docker ps -a  # Check actual container name
+docker start container_name  # Start if stopped
+```
+
+### Issue 3: "Permission denied" when saving file
+**Problem:** Trying to save in protected directory
+**Solution:**
+```bash
+cd ~/  # Go to home directory
+docker save -o filename.tar image_name:tag
+```
+
+### Issue 4: "No such file" when loading
+**Problem:** Friend looking for file in wrong location
+**Solution:**
+```bash
+pwd  # Check current directory
+ls -la *.tar  # Look for tar files
+cd /path/to/file  # Navigate to correct location
+```
+
+### Issue 5: Huge file size
+**Problem:** Image is several GB
+**Solutions:**
+- Clean up before committing:
+```bash
+# Inside container before committing
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/*
+```
+
+## Step-by-Step Checklist
+
+### Before You Start:
+- [ ] Docker is installed and running
+- [ ] You know your Docker Hub username (if using Method 2)
+
+### Creating the Image:
+- [ ] Start container with `--name` parameter
+- [ ] Do your work inside the container
+- [ ] Open NEW terminal (don't exit container)
+- [ ] Run `docker commit` from host machine
+- [ ] Check image exists with `docker images`
+
+### Testing:
+- [ ] Exit original container
+- [ ] Start fresh container from your image
+- [ ] Verify your work is there
+
+### Sharing:
+- [ ] Navigate to appropriate directory
+- [ ] Save with correct filename
+- [ ] Check file size is reasonable
+- [ ] Test loading process yourself first
+
+## Real Example with Potential Mistakes
+
+**Student scenario: Setting up ROS2 development environment**
+
+```bash
+# 1. ❌ MISTAKE: Forgot to name container
+docker run -it ros:humble bash
+
+# ✅ FIX: Exit and restart with name
+exit
+docker run -it --name ros2_dev ros:humble bash
+
+# 2. Inside container - set up everything
+apt-get update && apt-get install -y python3-pip vim git
+pip3 install numpy matplotlib
+
+# Create workspace
+mkdir -p /workspace/src
+cd /workspace
+
+# 3. ❌ MISTAKE: Try to commit from inside container
+docker commit ros2_dev my_ros2_image:v1.0
+# Error: Cannot connect to Docker daemon
+
+# ✅ FIX: Open new terminal, run from host
+# In NEW terminal:
+docker commit ros2_dev my_ros2_image:v1.0
+
+# 4. ❌ MISTAKE: Test in same container
+# Still inside original container:
+ls /workspace  # This doesn't prove the image works!
+
+# ✅ FIX: Exit and test fresh
+exit
+docker run -it my_ros2_image:v1.0 bash
+ls /workspace  # Now this proves it worked!
+
+# 5. Share with teammate
+# ❌ MISTAKE: Try to save in root directory
+docker save -o /my_image.tar my_ros2_image:v1.0  # Permission denied!
+
+# ✅ FIX: Save in home directory
+cd ~/Desktop
+docker save -o my_ros2_image.tar my_ros2_image:v1.0
+```
+
+## Key Points to Remember
+
+1. **Always name your containers** with `--name`
+2. **Never run `docker commit` from inside the container** - use a new terminal
+3. **Test your saved image** by starting a fresh container
+4. **Watch your directory** when saving/loading files
+5. **Check file permissions** and sizes before sharing
+6. **Your friends need the exact filename** to load the image
+
+Following these guidelines will help you avoid the most common mistakes students make when saving and sharing Docker images!
+
+---
+
+## Common Problems and Solutions
+
+### Problem 1: "No nodes discovered" with Demo Nodes
+
+**Symptoms:**
+- `ros2 run demo_nodes_cpp talker` runs
+- `ros2 run demo_nodes_cpp listener` shows no messages
+
+**Solutions:**
+```bash
+# Check 1: Same ROS_DOMAIN_ID
+docker run -it --network ros_net -e ROS_DOMAIN_ID=42 ros:humble bash
+
+# Check 2: Same network
+docker run -it --network ros_net ros:humble bash
+
+# Check 3: Test network connectivity
+docker exec container1 ping container2
+```
+
+### Problem 2: "Cannot resolve hostname"
+
+**Symptoms:**
+- Containers can't find each other by name
+- Network errors in logs
+
+**Solution:**
+```yaml
+# Ensure both services use same network
+services:
+  service1:
+    networks:
+      - ros_network  # Same network name
+  service2:
+    networks:
+      - ros_network  # Same network name
+
+networks:
+  ros_network:
+    driver: bridge
+```
+
+### Problem 3: Custom package not found
+
+**Symptoms:**
+- `ros2 run my_package my_node` fails
+- "Package not found" error
+
+**Solutions:**
+```bash
+# Check 1: Package built correctly
+colcon build --packages-select my_package
+
+# Check 2: Workspace sourced
+source install/setup.bash
+
+# Check 3: Entry points in setup.py
+entry_points={
+    'console_scripts': [
+        'my_node = my_package.my_node:main',
+    ],
+},
+```
+
+### Problem 4: Docker build fails
+
+**Symptoms:**
+- Dockerfile fails to build
+- Permission or dependency errors
+
+**Solutions:**
+```dockerfile
+# Fix 1: Update package lists
+RUN apt-get update && apt-get install -y \
+    your-package \
+    && rm -rf /var/lib/apt/lists/*
+
+# Fix 2: Set correct permissions  
+COPY --chown=root:root src/ /workspace/src/
+
+# Fix 3: Install Python dependencies
+RUN pip3 install -r requirements.txt
+```
+
+### Problem 5: Containers exit immediately
+
+**Symptoms:**
+- `docker-compose up` starts then stops
+- No ongoing output
+
+**Solutions:**
+```yaml
+# Add interactive flags
+stdin_open: true
+tty: true
+
+# Fix command syntax
+command: >
+  bash -c "source /opt/ros/humble/setup.bash && 
+           source install/setup.bash && 
+           ros2 run my_package my_node"
+
+# Add restart policy
+restart: unless-stopped
+```
+
+---
+
+## Best Practices
+
+### 1. Always Use Same ROS_DOMAIN_ID
+```yaml
+environment:
+  - ROS_DOMAIN_ID=42  # Same number for all ROS containers
+```
+
+### 2. Use Meaningful Names
+```yaml
+container_name: temperature_sensor    # Good
+# container_name: node1               # Bad
+```
+
+### 3. Network Management
+```bash
+# Clean up networks regularly
+docker network prune
+
+# Use descriptive network names  
+networks:
+  robot_sensors_network:  # Good
+    driver: bridge
+```
+
+### 4. Development vs Production Images
+```dockerfile
+# Development - include build tools
+FROM ros:humble
+RUN apt-get update && apt-get install -y build-essential
+
+# Production - minimal image
+FROM ros:humble-ros-base  # Smaller base image
+```
+
+### 5. Resource Management
+```yaml
+# Limit container resources
+services:
+  my_node:
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+```
+
+---
+
+## Next Steps
+
+### Beginner Level ✅
+- [x] Understand Docker networking basics
+- [x] Run demo nodes in separate containers  
+- [x] Create custom ROS2 nodes in containers
+- [x] Save work as custom images
+
+### Intermediate Level 🔄  
+- [ ] Add ROS2 services between containers
+- [ ] Use ROS2 parameters and launch files
+- [ ] Implement health checks and monitoring
+- [ ] Multi-machine deployment
+
+
+### Practical Exercises
+
+1. **Exercise 1**: Modify the temperature nodes to use different message types
+2. **Exercise 2**: Add a third container that processes temperature data  
+3. **Exercise 3**: Create a service that returns temperature statistics
+4. **Exercise 4**: Build a multi-robot system with separate networks
+
+---
+
+## Summary
+
+**What we learned:**
+✅ Docker networking fundamentals (bridge networks, container names)
+✅ Why ROS2 containers can't communicate by default
+✅ Quick testing with demo nodes before building custom ones  
+✅ Creating and packaging custom ROS2 nodes
+✅ Saving work as reusable Docker images
+✅ Troubleshooting common networking issues
+
+**Key concepts:**
+- **Custom networks** enable container communication
+- **ROS_DOMAIN_ID** must match across all ROS2 containers  
+- **Demo nodes first** - understand concepts before building
+- **Docker images** save your work for reuse
+- **Docker Compose** automates complex setups
+
+**Files you created:**
+- `docker-compose.yml` - Multi-container orchestration
+- `Dockerfile` - Custom image definitions
+- ROS2 package with custom publisher/subscriber nodes
+
+You now have practical skills to deploy ROS2 systems across multiple Docker containers! 🎉
+            </script>
+            
+            <!-- The Markdown above will be rendered as HTML here -->
+            <noscript>
+                <div style="color: red; padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px;">
+                    <strong>JavaScript Required:</strong> Please enable JavaScript to view the tutorial content.
+                </div>
+            </noscript>
+            <div id="md-content"></div>
+        </div>
+
+        <!-- Tutorial Navigation -->
+        <div class="tutorial-nav">
+            <a href="chapter_2_Docker.html" class="nav-button">
+                ← Back to Tutorials
+            </a>
+            <a href="../../tutorials/index.html" class="nav-button next-tutorial">
+                Next Tutorial →
+            </a>
+        </div>
+    </div>
+    </div>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script>
+    // Sidebar toggle logic
+    const sidebar = document.getElementById('sidebarNav');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        document.body.classList.add('sidebar-open');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+    }
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+    // Close sidebar on ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeSidebar();
+    });
+    // Close sidebar on link click (mobile UX)
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+    // Simple markdown rendering logic with Prism.js and robust fallback
+    document.addEventListener('DOMContentLoaded', function() {
+        const mdScript = document.getElementById('md-raw');
+        const mdContent = document.getElementById('md-content');
+        if (mdScript && mdContent && window.marked) {
+            // Use default marked renderer for headings (let marked handle IDs)
+            marked.setOptions({
+                gfm: true,
+                breaks: true,
+                smartLists: true,
+                smartypants: true
+            });
+            mdContent.innerHTML = marked.parse(mdScript.textContent.trim());
+            Prism.highlightAll();
+
+            // Helper: Normalize string for ID comparison
+            function normalizeId(str) {
+                return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            }
+
+            // Smooth scroll for TOC links (robust: match heading IDs even if special chars)
+            function attachSmoothScroll(links, container) {
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        if (href && href.startsWith('#')) {
+                            let target = document.getElementById(href.slice(1));
+                            // If not found, try to find a heading with a similar normalized ID
+                            if (!target) {
+                                const allHeadings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                                for (const heading of allHeadings) {
+                                    if (normalizeId(heading.textContent) === normalizeId(href.slice(1))) {
+                                        target = heading;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (target) {
+                                e.preventDefault();
+                                // Offset for sticky nav
+                                const nav = document.querySelector('nav');
+                                const navHeight = nav ? nav.offsetHeight : 0;
+                                const targetRect = target.getBoundingClientRect();
+                                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                                const top = targetRect.top + scrollTop - navHeight - 10; // 10px extra offset
+                                window.scrollTo({ top, behavior: 'smooth' });
+                            }
+                        }
+                    });
+                });
+            }
+            // Attach to links in markdown content
+            attachSmoothScroll(mdContent.querySelectorAll('a[href^="#"]'), mdContent);
+            // Attach to links in sidebar (use mdContent as container for headings)
+            const sidebar = document.getElementById('sidebarNav');
+            if (sidebar) {
+                attachSmoothScroll(sidebar.querySelectorAll('a[href^="#"]'), mdContent);
+            }
+        }
+    });
+    </script>
+</body>
+</html>
